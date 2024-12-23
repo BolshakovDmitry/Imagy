@@ -14,7 +14,6 @@
 		B296D2502D19AD4000880E1D /* ImagyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D24F2D19AD4000880E1D /* ImagyTests.swift */; };
 		B296D25A2D19AD4000880E1D /* ImagyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D2592D19AD4000880E1D /* ImagyUITests.swift */; };
 		B296D25C2D19AD4000880E1D /* ImagyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D25B2D19AD4000880E1D /* ImagyUITestsLaunchTests.swift */; };
-		B296D2712D19B24600880E1D /* .gitignore.txt in Resources */ = {isa = PBXBuildFile; fileRef = B296D2702D19B24600880E1D /* .gitignore.txt */; };
 		B296D2732D19B42800880E1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B296D2722D19B42800880E1D /* Assets.xcassets */; };
 		B296D27D2D19B96C00880E1D /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D27A2D19B96C00880E1D /* Array+Extensions.swift */; };
 		B296D27F2D19B96C00880E1D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D27C2D19B96C00880E1D /* Date+Extensions.swift */; };
@@ -51,7 +50,6 @@
 		B296D2552D19AD4000880E1D /* ImagyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B296D2592D19AD4000880E1D /* ImagyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagyUITests.swift; sourceTree = "<group>"; };
 		B296D25B2D19AD4000880E1D /* ImagyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagyUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		B296D2702D19B24600880E1D /* .gitignore.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore.txt; sourceTree = "<group>"; };
 		B296D2722D19B42800880E1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../Downloads/Sprint_8_-_Lesson_4_-_1_-_Prepare_Launch_Screen/Image Feed/Assets.xcassets"; sourceTree = "<group>"; };
 		B296D27A2D19B96C00880E1D /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		B296D27C2D19B96C00880E1D /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 		B296D26F2D19B24600880E1D /* gitignore */ = {
 			isa = PBXGroup;
 			children = (
-				B296D2702D19B24600880E1D /* .gitignore.txt */,
 			);
 			path = gitignore;
 			sourceTree = "<group>";
@@ -260,7 +257,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B296D2452D19AD4000880E1D /* LaunchScreen.storyboard in Resources */,
-				B296D2712D19B24600880E1D /* .gitignore.txt in Resources */,
 				B296D2732D19B42800880E1D /* Assets.xcassets in Resources */,
 				B296D28D2D19D36B00880E1D /* Main.storyboard in Resources */,
 			);
