@@ -16,6 +16,7 @@
 		B296D27F2D19B96C00880E1D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D27C2D19B96C00880E1D /* Date+Extensions.swift */; };
 		B296D28F2D1A0C9000880E1D /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D28E2D1A0C9000880E1D /* ImagesListCell.swift */; };
 		B296D2932D1A321800880E1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B296D2912D1A321800880E1D /* Main.storyboard */; };
+		B296D2992D1A5C2400880E1D /* .gitignore.txt in Resources */ = {isa = PBXBuildFile; fileRef = B296D2982D1A5C2400880E1D /* .gitignore.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B296D27C2D19B96C00880E1D /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B296D28E2D1A0C9000880E1D /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		B296D2922D1A321800880E1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "../../../Downloads/Sprint_8_-_Lesson_4_-_5_-_Add_Like_Button_to_TableViewCell/Image Feed/Base.lproj/Main.storyboard"; sourceTree = "<group>"; };
+		B296D2982D1A5C2400880E1D /* .gitignore.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +81,7 @@
 		B296D22C2D19AD3E00880E1D = {
 			isa = PBXGroup;
 			children = (
-				B296D26F2D19B24600880E1D /* gitignore */,
+				B296D2972D1A5C2400880E1D /* gitignore */,
 				B296D2372D19AD3E00880E1D /* Imagy */,
 				B296D2362D19AD3E00880E1D /* Products */,
 			);
@@ -110,13 +112,6 @@
 			path = Imagy;
 			sourceTree = "<group>";
 		};
-		B296D26F2D19B24600880E1D /* gitignore */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = gitignore;
-			sourceTree = "<group>";
-		};
 		B296D2792D19B96C00880E1D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +128,15 @@
 				B296D23C2D19AD3E00880E1D /* ImagesListViewController.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		B296D2972D1A5C2400880E1D /* gitignore */ = {
+			isa = PBXGroup;
+			children = (
+				B296D2982D1A5C2400880E1D /* .gitignore.txt */,
+			);
+			name = gitignore;
+			path = ../../Downloads/gitignore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +245,7 @@
 			files = (
 				B296D2932D1A321800880E1D /* Main.storyboard in Resources */,
 				B296D2452D19AD4000880E1D /* LaunchScreen.storyboard in Resources */,
+				B296D2992D1A5C2400880E1D /* .gitignore.txt in Resources */,
 				B296D2732D19B42800880E1D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
