@@ -16,7 +16,6 @@
 		B296D27D2D19B96C00880E1D /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D27A2D19B96C00880E1D /* Array+Extensions.swift */; };
 		B296D27F2D19B96C00880E1D /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D27C2D19B96C00880E1D /* Date+Extensions.swift */; };
 		B296D28F2D1A0C9000880E1D /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D28E2D1A0C9000880E1D /* ImagesListCell.swift */; };
-		B296D2992D1A5C2400880E1D /* .gitignore.txt in Resources */ = {isa = PBXBuildFile; fileRef = B296D2982D1A5C2400880E1D /* .gitignore.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +49,6 @@
 		B296D27A2D19B96C00880E1D /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		B296D27C2D19B96C00880E1D /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B296D28E2D1A0C9000880E1D /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
-		B296D2982D1A5C2400880E1D /* .gitignore.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +79,6 @@
 		B296D22C2D19AD3E00880E1D = {
 			isa = PBXGroup;
 			children = (
-				B296D2972D1A5C2400880E1D /* gitignore */,
 				B296D2372D19AD3E00880E1D /* Imagy */,
 				B296D2362D19AD3E00880E1D /* Products */,
 			);
@@ -128,15 +125,6 @@
 				B293A0BA2D1A665D00239E92 /* Main.storyboard */,
 			);
 			path = ImagesList;
-			sourceTree = "<group>";
-		};
-		B296D2972D1A5C2400880E1D /* gitignore */ = {
-			isa = PBXGroup;
-			children = (
-				B296D2982D1A5C2400880E1D /* .gitignore.txt */,
-			);
-			name = gitignore;
-			path = ../../Downloads/gitignore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B296D2452D19AD4000880E1D /* LaunchScreen.storyboard in Resources */,
-				B296D2992D1A5C2400880E1D /* .gitignore.txt in Resources */,
 				B296D2732D19B42800880E1D /* Assets.xcassets in Resources */,
 				B293A0BB2D1A665D00239E92 /* Main.storyboard in Resources */,
 			);
