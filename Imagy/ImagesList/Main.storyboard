@@ -73,7 +73,6 @@
                                             <outlet property="cellImage" destination="UHT-CC-7rY" id="m9i-Vu-M30"/>
                                             <outlet property="dateLabel" destination="zZ7-qv-kLf" id="v4s-uC-ojU"/>
                                             <outlet property="likeButton" destination="sdE-8c-JJO" id="qI9-Lz-Dgp"/>
-                                            <segue destination="yt2-5T-c6e" kind="show" id="L6K-zK-oPq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -95,6 +94,7 @@
                     <navigationItem key="navigationItem" id="1dQ-by-BZA"/>
                     <connections>
                         <outlet property="tableView" destination="0ZD-Gs-GgP" id="Fuw-16-5ad"/>
+                        <segue destination="yt2-5T-c6e" kind="presentation" identifier="ShowSingleImage" id="o7x-YO-K11"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -233,27 +233,64 @@
         <!--Single Image View Controller-->
         <scene sceneID="M7K-dB-Sig">
             <objects>
-                <viewController id="yt2-5T-c6e" customClass="SingleImageViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="yt2-5T-c6e" customClass="SingleImageViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y9Z-qe-5Ht">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="UgV-nT-ghM">
-                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Htj-9w-5zc">
+                                <rect key="frame" x="-20" y="-20" width="454" height="936"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="UgV-nT-ghM">
+                                        <rect key="frame" x="20" y="20" width="414" height="896"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="xHg-EB-hFc"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="FtH-iY-e3E"/>
+                                <connections>
+                                    <outlet property="delegate" destination="yt2-5T-c6e" id="utI-zS-IqK"/>
+                                </connections>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rbw-AU-6eo">
+                                <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="DC3-tZ-fzz"/>
+                                    <constraint firstAttribute="width" constant="48" id="Rte-gR-oFN"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="nav_back_button_white"/>
+                                <connections>
+                                    <action selector="didTapBackButton" destination="yt2-5T-c6e" eventType="touchUpInside" id="6hc-RP-2qi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cq3-H5-eF9">
+                                <rect key="frame" x="182" y="829" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="pIO-oz-J2e"/>
+                                    <constraint firstAttribute="width" constant="50" id="ztd-lp-ayJ"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="share_button"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="yt2-5T-c6e" eventType="touchUpInside" id="EFL-G6-7BQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cqG-5x-ifI"/>
                         <color key="backgroundColor" name="YP Background"/>
                         <constraints>
-                            <constraint firstItem="UgV-nT-ghM" firstAttribute="leading" secondItem="cqG-5x-ifI" secondAttribute="leading" id="5oe-2j-Wzb"/>
-                            <constraint firstItem="UgV-nT-ghM" firstAttribute="bottom" secondItem="cqG-5x-ifI" secondAttribute="bottom" id="Mbg-4e-O0X"/>
-                            <constraint firstItem="UgV-nT-ghM" firstAttribute="top" secondItem="cqG-5x-ifI" secondAttribute="top" id="YXM-Al-Xll"/>
-                            <constraint firstItem="UgV-nT-ghM" firstAttribute="trailing" secondItem="cqG-5x-ifI" secondAttribute="trailing" id="hDg-cg-xnr"/>
+                            <constraint firstItem="cqG-5x-ifI" firstAttribute="bottom" secondItem="cq3-H5-eF9" secondAttribute="bottom" constant="17" id="B56-od-V3c"/>
+                            <constraint firstItem="Rbw-AU-6eo" firstAttribute="leading" secondItem="cqG-5x-ifI" secondAttribute="leading" constant="8" id="Sqj-eh-gpx"/>
+                            <constraint firstItem="cq3-H5-eF9" firstAttribute="centerX" secondItem="y9Z-qe-5Ht" secondAttribute="centerX" id="Ufg-2W-1fc"/>
+                            <constraint firstItem="Rbw-AU-6eo" firstAttribute="top" secondItem="cqG-5x-ifI" secondAttribute="top" constant="8" id="w8f-iF-nTh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TGx-TF-ykR"/>
                     <connections>
                         <outlet property="imageView" destination="UgV-nT-ghM" id="mBy-MJ-tHo"/>
+                        <outlet property="scrollView" destination="Htj-9w-5zc" id="snp-9c-3KU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ut2-yL-INW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -266,6 +303,8 @@
         <image name="avatar" width="70" height="70"/>
         <image name="like_button_on" width="42" height="42"/>
         <image name="logout_button" width="44" height="44"/>
+        <image name="nav_back_button_white" width="24" height="24"/>
+        <image name="share_button" width="50" height="50"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Background">
