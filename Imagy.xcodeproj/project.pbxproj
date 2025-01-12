@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B26497902D1EE2D20005F8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B264978F2D1EE2D20005F8DF /* Assets.xcassets */; };
+		B26497942D2ED1A80005F8DF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26497932D2ED1A80005F8DF /* ProfileViewController.swift */; };
+		B26497962D2EE02B0005F8DF /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26497952D2EE02B0005F8DF /* SingleImageViewController.swift */; };
 		B293A0BB2D1A665D00239E92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B293A0BA2D1A665D00239E92 /* Main.storyboard */; };
 		B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D2382D19AD3E00880E1D /* AppDelegate.swift */; };
 		B296D23B2D19AD3E00880E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D23A2D19AD3E00880E1D /* SceneDelegate.swift */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		B264978F2D1EE2D20005F8DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
+		B26497932D2ED1A80005F8DF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		B26497952D2EE02B0005F8DF /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		B293A0BA2D1A665D00239E92 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B296D2352D19AD3E00880E1D /* Imagy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imagy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B296D2382D19AD3E00880E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,9 +80,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B26497922D2ED1750005F8DF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B26497932D2ED1A80005F8DF /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		B296D22C2D19AD3E00880E1D = {
 			isa = PBXGroup;
 			children = (
+				B26497922D2ED1750005F8DF /* Profile */,
 				B296D2372D19AD3E00880E1D /* Imagy */,
 				B296D2362D19AD3E00880E1D /* Products */,
 			);
@@ -123,6 +136,7 @@
 				B296D28E2D1A0C9000880E1D /* ImagesListCell.swift */,
 				B296D23C2D19AD3E00880E1D /* ImagesListViewController.swift */,
 				B293A0BA2D1A665D00239E92 /* Main.storyboard */,
+				B26497952D2EE02B0005F8DF /* SingleImageViewController.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -262,7 +276,9 @@
 				B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */,
 				B296D23B2D19AD3E00880E1D /* SceneDelegate.swift in Sources */,
 				B296D27D2D19B96C00880E1D /* Array+Extensions.swift in Sources */,
+				B26497942D2ED1A80005F8DF /* ProfileViewController.swift in Sources */,
 				B296D27F2D19B96C00880E1D /* Date+Extensions.swift in Sources */,
+				B26497962D2EE02B0005F8DF /* SingleImageViewController.swift in Sources */,
 				B296D28F2D1A0C9000880E1D /* ImagesListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
