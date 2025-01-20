@@ -2,59 +2,81 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let profileImage = UIImage(named: "avatar")
-        let imageView = UIImageView(image: profileImage)
+    private lazy var avatarImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "avatar")
         imageView.tintColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
+        return imageView
+    }()
+    
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Екатерина Новикова"
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 23, weight: .bold) // SF Pro Bold, Size 23
+        label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-        label.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        
-        
-        let label2 = UILabel()
-        label2.text = "@ekaterina_nov"
-        label2.textColor = UIColor(named: "YP Grey")
-        label2.font = UIFont.systemFont(ofSize: 13, weight: .regular) // SF Pro Bold, Size 23
-        label2.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label2)
-        label2.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8).isActive = true
-        label2.leadingAnchor.constraint(equalTo: label.leadingAnchor).isActive = true
-        
-        let label3 = UILabel()
-        label3.text = "Hello, world!"
-        label3.textColor = .white
-        label3.font = UIFont.systemFont(ofSize: 13, weight: .regular) // SF Pro Bold, Size 23
-        label3.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label3)
-        label3.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 8).isActive = true
-        label3.leadingAnchor.constraint(equalTo: label.leadingAnchor).isActive = true
-        
-        let button = UIButton.systemButton(
-            with: UIImage(systemName: "ipad.and.arrow.forward")!,
-            target: self,
-            action: nil
-        )
+        return label
+    }()
+    
+    private lazy var usernameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "@ekaterina_nov"
+        label.textColor = UIColor(named: "YP Grey")
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var greetingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hello, world!"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var shareButton: UIButton = {
+        let button = UIButton.systemButton(with: UIImage(systemName: "ipad.and.arrow.forward")!, target: self, action: nil)
         button.tintColor = UIColor(named: "YP Red")
         button.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(button)
-        button.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        button.centerYAnchor.constraint(equalTo: imageView.centerYAnchor, constant: 0).isActive = true
+        return button
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        setupViews()
+        setupConstraints()
+    }
+    
+    private func setupViews() {
+        view.addSubview(avatarImageView)
+        view.addSubview(nameLabel)
+        view.addSubview(usernameLabel)
+        view.addSubview(greetingLabel)
+        view.addSubview(shareButton)
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            avatarImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 70),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 70),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+            
+            usernameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            usernameLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            
+            greetingLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8),
+            greetingLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            
+            shareButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            shareButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 0)
+        ])
     }
 }
-
-
