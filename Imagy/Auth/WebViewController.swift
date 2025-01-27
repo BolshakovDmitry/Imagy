@@ -3,39 +3,13 @@ import WebKit
 
 final class WebViewController: UIViewController {
     
-    enum WebViewConstants {
-        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-    }
-    
     weak var delegate: WebViewControllerDelegate?
-    
-    private func loadAuthView() {
-        
-        print("in the loadView")
-        
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            return
-        }
-      
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-
-        guard let url = urlComponents.url else {
-            return
-        }
-        
-        //"https://unsplash.com/oauth/authorize?client_id=%3C%D0%B2%D0%B0%D1%88%20Access%20Key%3E&redirect_uri=%3C%D0%B2%D0%B0%D1%88%20Redirect%20URI%3E&response_type=code&scope=public+read_user+write_likes"
-        
-        let request = URLRequest(url: url)
-        webView.load(request)
-        }
-    
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
+    
+    fileprivate enum WebViewConstants {
+        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +46,26 @@ final class WebViewController: UIViewController {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
+    
+    private func loadAuthView() {
+        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+            return
+        }
+      
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.accessKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: Constants.accessScope)
+        ]
+
+        guard let url = urlComponents.url else {
+            return
+        }
+
+        let request = URLRequest(url: url)
+        webView.load(request)
+        }
 }
 
 extension WebViewController: WKNavigationDelegate {
@@ -81,7 +75,7 @@ extension WebViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let code = code(from: navigationAction) {
-            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code) 
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

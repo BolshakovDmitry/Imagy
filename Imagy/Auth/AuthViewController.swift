@@ -2,14 +2,15 @@ import UIKit
 
 final class AuthViewController: UIViewController {
     
+    weak var delegate: AuthViewControllerDelegate?
     private let ShowWebViewSegueIdentifier = "ShowWebView"
     private let oauth2Service = OAuth2Service.shared
     
     private func configureBackButton() {
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_back_button") // 1
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_back_button") // 2
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil) // 3
-        navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black") // 4
+        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav_back_button")
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav_back_button")
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem?.tintColor = UIColor(named: "YP Black")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -21,7 +22,6 @@ final class AuthViewController: UIViewController {
                 assertionFailure("Failed to prepare for \(ShowWebViewSegueIdentifier)")
                 return
             }
-            print("we are in the webViewController - ", webViewController)
             webViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -37,9 +37,14 @@ final class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewControllerDelegate {
     func webViewViewController(_ vc: WebViewController, didAuthenticateWithCode code: String) {
-        oauth2Service.fetchOAuthToken(code: code)
-        
-        
+        oauth2Service.fetchOAuthToken(code: code) { result in
+            switch result {
+            case .success(_):
+                self.delegate?.didAuthenticate(self)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     func webViewViewControllerDidCancel(_ vc: WebViewController) {

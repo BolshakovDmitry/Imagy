@@ -4,10 +4,8 @@ import Foundation
 final class Storage {
     
     private var userDefaults = UserDefaults.standard
-    
     private enum Keys: String {
         case token
-        
     }
     
     var token: String? {
@@ -18,8 +16,6 @@ final class Storage {
             userDefaults.set(newValue, forKey: Keys.token.rawValue)
         }
     }
-    
-
     
     func store(with token: String?) {
         self.token = token

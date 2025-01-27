@@ -27,6 +27,8 @@
 		B2C891562D42377800DF4430 /* NetworkRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891552D42377800DF4430 /* NetworkRouting.swift */; };
 		B2C891592D424B7500DF4430 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891582D424B7500DF4430 /* OAuthTokenResponseBody.swift */; };
 		B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915B2D428A6300DF4430 /* Storage.swift */; };
+		B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915E2D43B73700DF4430 /* SplashViewController.swift */; };
+		B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		B2C891552D42377800DF4430 /* NetworkRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouting.swift; sourceTree = "<group>"; };
 		B2C891582D424B7500DF4430 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		B2C8915B2D428A6300DF4430 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		B2C8915E2D43B73700DF4430 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 		B296D2372D19AD3E00880E1D /* Imagy */ = {
 			isa = PBXGroup;
 			children = (
+				B2C8915D2D43B72B00DF4430 /* SplashViewController */,
 				B2C8915A2D428A1B00DF4430 /* Storage */,
 				B2C891572D424B5E00DF4430 /* Models */,
 				B2C891502D410D4F00DF4430 /* Services */,
@@ -187,6 +192,7 @@
 			children = (
 				B2C8914E2D3FC28100DF4430 /* WebViewControllerDelegate.swift */,
 				B2C891552D42377800DF4430 /* NetworkRouting.swift */,
+				B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -214,6 +220,14 @@
 				B2C8915B2D428A6300DF4430 /* Storage.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		B2C8915D2D43B72B00DF4430 /* SplashViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B2C8915E2D43B73700DF4430 /* SplashViewController.swift */,
+			);
+			path = SplashViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,6 +364,7 @@
 				B296D23D2D19AD3E00880E1D /* ImagesListViewController.swift in Sources */,
 				B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */,
 				B2C891522D410D7000DF4430 /* OAuth2Service.swift in Sources */,
+				B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */,
 				B2C8914A2D3EA13D00DF4430 /* AuthViewController.swift in Sources */,
 				B2C891452D3E7BBA00DF4430 /* Constans.swift in Sources */,
 				B2C8914C2D3EA3EA00DF4430 /* WebViewController.swift in Sources */,
@@ -362,6 +377,7 @@
 				B2C891542D42374400DF4430 /* NetworkClient.swift in Sources */,
 				B2C8914F2D3FC28100DF4430 /* WebViewControllerDelegate.swift in Sources */,
 				B296D28F2D1A0C9000880E1D /* ImagesListCell.swift in Sources */,
+				B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */,
 				B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */,
 				B2C891562D42377800DF4430 /* NetworkRouting.swift in Sources */,
 			);

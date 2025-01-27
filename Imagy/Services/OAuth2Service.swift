@@ -2,40 +2,40 @@
 import Foundation
 
 final class OAuth2Service{
+    
     static let shared = OAuth2Service()
     private init(){}
     
     private let networkClient = NetworkClient()
+    private let storage = Storage()
+    private var bearerToken = ""
     
-   private var bearerToken = ""
-    
-    
-    
-    func fetchOAuthToken(code: String) {
+    func fetchOAuthToken(code: String, handler: @escaping (Result<String, Error>) -> Void) {
         
        let request = makeOAuthTokenRequest(code: code)
         
-        networkClient.fetch(urlrequest: request, handler: { result in
+        networkClient.fetch(urlrequest: request, handler: { [weak self] result in
             DispatchQueue.main.async {
+                guard let self = self else { return }
                 switch result {
                 case .success(let data):
                     do {
                         let token = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
                         self.bearerToken = token.accessToken
-                        print(self.bearerToken)
+                        self.storage.store(with: self.bearerToken)
+                        handler(.success("Success"))
                     } catch {
                         print("Ошибка декодирования: $error)")
+                        handler(.failure(error))
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                 } 
             }
         })
-        
     }
     
-    
-    func makeOAuthTokenRequest(code: String) -> URLRequest {
+    private func makeOAuthTokenRequest(code: String) -> URLRequest {
          let baseURL = URL(string: "https://unsplash.com")!
         guard let url = URL(
              string: "/oauth/token"
@@ -51,6 +51,4 @@ final class OAuth2Service{
          request.httpMethod = "POST"
          return request
      }
-    
-    
 }
