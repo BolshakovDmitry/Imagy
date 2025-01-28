@@ -10,7 +10,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+    
         if storage.token != nil { // проверка наличия токена
             performSegue(withIdentifier: showMainFlow, sender: nil)
         } else {
