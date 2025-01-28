@@ -34,21 +34,21 @@ final class OAuth2Service{
             }
         })
     }
-    
+     
     private func makeOAuthTokenRequest(code: String) -> URLRequest {
-         let baseURL = URL(string: "https://unsplash.com")!
-        guard let url = URL(
-             string: "/oauth/token"
-             + "?client_id=\(Constants.accessKey)"         // Используем знак ?, чтобы начать перечисление параметров запроса
-             + "&&client_secret=\(Constants.secretKey)"    // Используем &&, чтобы добавить дополнительные параметры
-             + "&&redirect_uri=\(Constants.redirectURI)"
-             + "&&code=\(code)"
-             + "&&grant_type=authorization_code",
-             relativeTo: baseURL                           // Опираемся на основной или базовый URL, которые содержат схему и имя хоста
-         ) else { fatalError("Could not create URL.") }
+        guard var components = URLComponents(string: "https://unsplash.com/oauth/token") else { fatalError("Failed to create base URL") }
+        let queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.accessKey),
+            URLQueryItem(name: "client_secret", value: Constants.secretKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "code", value: code),
+            URLQueryItem(name: "grant_type", value: "authorization_code")
+        ]
+        components.queryItems = queryItems
+        guard let url = components.url else { fatalError("Failed to create final URL") }
         
-         var request = URLRequest(url: url)
-         request.httpMethod = "POST"
-         return request
-     }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        return request
+    }
 }

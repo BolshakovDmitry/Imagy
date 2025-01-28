@@ -49,23 +49,27 @@ final class WebViewController: UIViewController {
     
     private func loadAuthView() {
         guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
+            print("Failed to create base WEB-URL")
             return
         }
-      
-        urlComponents.queryItems = [
+        
+        let queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
             URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
-
+        urlComponents.queryItems = queryItems
+        
         guard let url = urlComponents.url else {
+            print("Failed to construct final URL")
             return
         }
 
         let request = URLRequest(url: url)
         webView.load(request)
-        }
+    }
+    
 }
 
 extension WebViewController: WKNavigationDelegate {
@@ -90,7 +94,9 @@ extension WebViewController: WKNavigationDelegate {
             let items = urlComponents.queryItems,
             let codeItem = items.first(where: { $0.name == "code" })
         {
-            print(codeItem.value!)
+            if let value = codeItem.value {
+                     print(value) 
+                 }
             return codeItem.value
             
         } else {

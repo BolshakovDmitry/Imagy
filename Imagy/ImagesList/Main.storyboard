@@ -105,7 +105,7 @@
         <!--Splash View Controller-->
         <scene sceneID="3ab-kn-xWn">
             <objects>
-                <viewController id="4fP-uN-LC7" customClass="SplashViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="4fP-uN-LC7" customClass="SplashViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SBh-Pu-jGP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -263,7 +263,7 @@
         <!--Auth View Controller-->
         <scene sceneID="5pc-Uu-9ho">
             <objects>
-                <viewController id="2qo-Cd-RJg" customClass="AuthViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="2qo-Cd-RJg" customClass="AuthViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Cp-nP-Wff">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -358,12 +358,12 @@
         <!--Item-->
         <scene sceneID="BOu-8m-5PK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sW1-q9-oAW" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="sW1-q9-oAW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="j3D-8b-93d"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="c4n-dp-hEc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7xY-OF-LoD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

@@ -131,6 +131,7 @@
 		B296D2372D19AD3E00880E1D /* Imagy */ = {
 			isa = PBXGroup;
 			children = (
+				B2C891622D4901D900DF4430 /* Constans */,
 				B2C8915D2D43B72B00DF4430 /* SplashViewController */,
 				B2C8915A2D428A1B00DF4430 /* Storage */,
 				B2C891572D424B5E00DF4430 /* Models */,
@@ -144,7 +145,6 @@
 				B293A0BA2D1A665D00239E92 /* Main.storyboard */,
 				B296D23A2D19AD3E00880E1D /* SceneDelegate.swift */,
 				B296D2432D19AD4000880E1D /* LaunchScreen.storyboard */,
-				B2C891442D3E7BBA00DF4430 /* Constans.swift */,
 				B264978F2D1EE2D20005F8DF /* Assets.xcassets */,
 				B296D2792D19B96C00880E1D /* Helpers */,
 				B296D2462D19AD4000880E1D /* Info.plist */,
@@ -228,6 +228,14 @@
 				B2C8915E2D43B73700DF4430 /* SplashViewController.swift */,
 			);
 			path = SplashViewController;
+			sourceTree = "<group>";
+		};
+		B2C891622D4901D900DF4430 /* Constans */ = {
+			isa = PBXGroup;
+			children = (
+				B2C891442D3E7BBA00DF4430 /* Constans.swift */,
+			);
+			path = Constans;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
