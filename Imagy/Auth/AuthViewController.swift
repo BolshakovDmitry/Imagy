@@ -31,7 +31,6 @@ final class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
-        print("AuthViewController View mounted")
     }
 }
 
