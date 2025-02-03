@@ -12,6 +12,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if storage.token != nil { // проверка наличия токена
+            print("tokan from SplashViewController", storage.token!)
             performSegue(withIdentifier: showMainFlow, sender: nil)
         } else {
             performSegue(withIdentifier: showAuthenticationFlow, sender: nil)

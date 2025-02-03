@@ -44,11 +44,28 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let profileService = ProfileService.shared
+    private let storage = Storage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         setupConstraints()
+        
+        guard let token = storage.token else { return }
+        profileService.fetchProfile(token) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let profile):
+                    self?.nameLabel.text = profile.name
+                    self?.usernameLabel.text = profile.loginName
+                    self?.greetingLabel.text = profile.bio
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     private func setupViews() {

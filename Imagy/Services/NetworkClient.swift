@@ -7,11 +7,37 @@ enum NetworkError: Error {
     case urlSessionError
 }
 
-struct NetworkClient: NetworkRouting {
+enum AuthServiceError: Error {
+    case invalidRequest
+}
+
+class NetworkClient: NetworkRouting {
     
-    func fetch(urlrequest: URLRequest, handler: @escaping (Result<Data, Error>) -> Void) {
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
+    func fetch(urlrequest: URLRequest, requiresCodeCheck: Bool? = nil, handler: @escaping (Result<Data, Error>) -> Void) {
+        
+        assert(Thread.isMainThread)                         // 4
+        
+        if let requiresCodeCheck{
+            guard let code = urlrequest.extractCode() else {
+                handler(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+            
+            guard lastCode != code else {                               // 1
+                handler(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+            
+            task?.cancel()                                      // 2
+            lastCode = code
+        }
        
-       let task = URLSession.shared.dataTask(with: urlrequest) { data, response, error in
+       let task = URLSession.shared.dataTask(with: urlrequest) { [weak self] data, response, error in
+           
             // Проверяем, пришла ли ошибка
             if let error = error {
                 handler(.failure(NetworkError.urlRequestError(error)))
@@ -32,9 +58,24 @@ struct NetworkClient: NetworkRouting {
             // Возвращаем данные
             guard let resultData = data else { return }
            
-            handler(.success(resultData))
+           handler(.success(resultData))
+           
+           self?.task = nil                            // 14
+           self?.lastCode = nil
         }
-        
+        self.task = task                                // 15
         task.resume()
     }
 }
+
+
+    extension URLRequest {
+        func extractCode() -> String? {
+            guard let url = self.url,
+                  let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                  let queryItems = components.queryItems else {
+                return nil
+            }
+            return queryItems.first(where: { $0.name == "code" })?.value
+        }
+    }

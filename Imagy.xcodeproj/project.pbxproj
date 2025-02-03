@@ -10,6 +10,11 @@
 		B26497902D1EE2D20005F8DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B264978F2D1EE2D20005F8DF /* Assets.xcassets */; };
 		B26497942D2ED1A80005F8DF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26497932D2ED1A80005F8DF /* ProfileViewController.swift */; };
 		B26497962D2EE02B0005F8DF /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26497952D2EE02B0005F8DF /* SingleImageViewController.swift */; };
+		B2901ADF2D4E50E500AD6B0A /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = B2901ADE2D4E50E500AD6B0A /* ProgressHUD */; };
+		B2901AE12D50E29F00AD6B0A /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901AE02D50E29F00AD6B0A /* UIBlockingProgressHUD.swift */; };
+		B2901AE32D50E97A00AD6B0A /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901AE22D50E97A00AD6B0A /* ProfileService.swift */; };
+		B2901AE52D50E9D500AD6B0A /* ProfileResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901AE42D50E9D500AD6B0A /* ProfileResult.swift */; };
+		B2901AE72D50FCE900AD6B0A /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901AE62D50FCE900AD6B0A /* Profile.swift */; };
 		B293A0BB2D1A665D00239E92 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B293A0BA2D1A665D00239E92 /* Main.storyboard */; };
 		B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D2382D19AD3E00880E1D /* AppDelegate.swift */; };
 		B296D23B2D19AD3E00880E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D23A2D19AD3E00880E1D /* SceneDelegate.swift */; };
@@ -52,6 +57,10 @@
 		B264978F2D1EE2D20005F8DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		B26497932D2ED1A80005F8DF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B26497952D2EE02B0005F8DF /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		B2901AE02D50E29F00AD6B0A /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
+		B2901AE22D50E97A00AD6B0A /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		B2901AE42D50E9D500AD6B0A /* ProfileResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResult.swift; sourceTree = "<group>"; };
+		B2901AE62D50FCE900AD6B0A /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B293A0BA2D1A665D00239E92 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ImagesList/Main.storyboard; sourceTree = "<group>"; };
 		B296D2352D19AD3E00880E1D /* Imagy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imagy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B296D2382D19AD3E00880E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2901ADF2D4E50E500AD6B0A /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				B26497932D2ED1A80005F8DF /* ProfileViewController.swift */,
+				B2901AE22D50E97A00AD6B0A /* ProfileService.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -148,6 +159,7 @@
 				B264978F2D1EE2D20005F8DF /* Assets.xcassets */,
 				B296D2792D19B96C00880E1D /* Helpers */,
 				B296D2462D19AD4000880E1D /* Info.plist */,
+				B2901AE02D50E29F00AD6B0A /* UIBlockingProgressHUD.swift */,
 			);
 			path = Imagy;
 			sourceTree = "<group>";
@@ -210,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				B2C891582D424B7500DF4430 /* OAuthTokenResponseBody.swift */,
+				B2901AE42D50E9D500AD6B0A /* ProfileResult.swift */,
+				B2901AE62D50FCE900AD6B0A /* Profile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -254,6 +268,9 @@
 			dependencies = (
 			);
 			name = Imagy;
+			packageProductDependencies = (
+				B2901ADE2D4E50E500AD6B0A /* ProgressHUD */,
+			);
 			productName = Imagy;
 			productReference = B296D2352D19AD3E00880E1D /* Imagy.app */;
 			productType = "com.apple.product-type.application";
@@ -326,6 +343,9 @@
 				Base,
 			);
 			mainGroup = B296D22C2D19AD3E00880E1D;
+			packageReferences = (
+				B2901ADD2D4E50E500AD6B0A /* XCRemoteSwiftPackageReference "ProgressHUD" */,
+			);
 			productRefGroup = B296D2362D19AD3E00880E1D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -369,9 +389,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2901AE52D50E9D500AD6B0A /* ProfileResult.swift in Sources */,
 				B296D23D2D19AD3E00880E1D /* ImagesListViewController.swift in Sources */,
 				B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */,
+				B2901AE72D50FCE900AD6B0A /* Profile.swift in Sources */,
 				B2C891522D410D7000DF4430 /* OAuth2Service.swift in Sources */,
+				B2901AE12D50E29F00AD6B0A /* UIBlockingProgressHUD.swift in Sources */,
 				B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */,
 				B2C8914A2D3EA13D00DF4430 /* AuthViewController.swift in Sources */,
 				B2C891452D3E7BBA00DF4430 /* Constans.swift in Sources */,
@@ -388,6 +411,7 @@
 				B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */,
 				B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */,
 				B2C891562D42377800DF4430 /* NetworkRouting.swift in Sources */,
+				B2901AE32D50E97A00AD6B0A /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +751,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2901ADD2D4E50E500AD6B0A /* XCRemoteSwiftPackageReference "ProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/relatedcode/ProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.1.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2901ADE2D4E50E500AD6B0A /* ProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2901ADD2D4E50E500AD6B0A /* XCRemoteSwiftPackageReference "ProgressHUD" */;
+			productName = ProgressHUD;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B296D22D2D19AD3E00880E1D /* Project object */;
 }

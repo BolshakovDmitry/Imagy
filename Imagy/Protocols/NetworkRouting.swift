@@ -2,5 +2,5 @@
 import Foundation
 
 protocol NetworkRouting {
-    func fetch(urlrequest: URLRequest, handler: @escaping (Result<Data, Error>) -> Void)
+    func fetch(urlrequest: URLRequest, requiresCodeCheck: Bool?, handler: @escaping (Result<Data, Error>) -> Void)
 }

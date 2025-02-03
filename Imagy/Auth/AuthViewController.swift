@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class AuthViewController: UIViewController {
     
@@ -39,6 +40,7 @@ extension AuthViewController: WebViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code: code) { result in
             switch result {
             case .success(_):
+                UIBlockingProgressHUD.dissimiss()
                 self.delegate?.didAuthenticate(self)
             case .failure(let error):
                 print(error)

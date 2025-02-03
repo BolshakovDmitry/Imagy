@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 import WebKit
 
 final class WebViewController: UIViewController {
@@ -10,6 +11,7 @@ final class WebViewController: UIViewController {
     fileprivate enum WebViewConstants {
         static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +82,7 @@ extension WebViewController: WKNavigationDelegate {
     ) {
         if let code = code(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code) 
+            UIBlockingProgressHUD.show()
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
