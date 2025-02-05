@@ -1,26 +1,17 @@
 
 import Foundation
 
-final class ProfileService{
+final class ProfileImageService{
     
-    static let shared = ProfileService()
-    private init(){}
-    
-    private(set) var profile: Profile?
-        
-    enum AuthServiceError: Error {
-        case invalidRequest
-    }
-    
+    private (set) var avatarURL: String?
     private let networkClient = NetworkClient()
-    private let storage = Storage()
-    private lazy var bearerToken = storage.token
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
-    private let urlSession = URLSession.shared
-    private var task: URLSessionTask?
-    private var lastCode: String?
     
-    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void){
+    static let shared = ProfileImageService()
+    private init(){}
+ 
+    func fetchProfileImageURL(token: String, _ completion: @escaping (Result<String, Error>) -> Void){
         
         guard let request = makeRequestWithToken(with: token) else { return }
     
@@ -29,10 +20,16 @@ final class ProfileService{
                     switch result {
                     case .success(let data):
                         do {
-                            let decodedData = try JSONDecoder().decode(ProfileResult.self, from: data)
-                            let decodedprofile = Profile(username: decodedData.userName, firstName: decodedData.firstName, lastName: decodedData.lastName, bio: decodedData.bio)
-                            self.profile = decodedprofile
-                            completion(.success(decodedprofile))
+                            let decodedData = try JSONDecoder().decode(UserImage.self, from: data)
+                            let avatarURL = decodedData.profileImage.small
+                            self.avatarURL = avatarURL
+                            completion(.success(avatarURL))
+                            
+                            NotificationCenter.default                                     // 1
+                                .post(                                                     // 2
+                                    name: ProfileImageService.didChangeNotification,       // 3
+                                    object: self,                                          // 4
+                                    userInfo: ["URL": avatarURL])
                         } catch {
                             print("Ошибка декодирования: $error)")
                             completion(.failure(error))
@@ -74,7 +71,11 @@ final class ProfileService{
     
     
     
-    }
+        
     
     
-
+    
+    
+    
+    
+}

@@ -7,12 +7,17 @@ final class SplashViewController: UIViewController {
     private let storage = Storage()
     private let showMainFlow = "showMainFlow"
     private let showAuthenticationFlow = "showAuthenticationFlow"
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if storage.token != nil { // проверка наличия токена
-            print("tokan from SplashViewController", storage.token!)
+            guard let token = storage.token else { return }
+            print("token from SplashViewController", storage.token!)
+            fetchProfile(token: token)
+            fetchProfileImage(token: token)
             performSegue(withIdentifier: showMainFlow, sender: nil)
         } else {
             performSegue(withIdentifier: showAuthenticationFlow, sender: nil)
@@ -68,6 +73,36 @@ final class SplashViewController: UIViewController {
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
+        guard let token = storage.token else { return }
+        fetchProfile(token: token)
+        fetchProfileImage(token: token)
         switchToTabBarController()
     }
+    
+    func fetchProfile(token: String){
+        UIBlockingProgressHUD.show()
+        profileService.fetchProfile(token) { [weak self] result in
+            UIBlockingProgressHUD.dissimiss()
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    self?.switchToTabBarController()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func fetchProfileImage(token: String){
+        profileImageService.fetchProfileImageURL(token: token) { [weak self] result in
+            switch result {
+            case .success(let pictureURL):
+                print(pictureURL)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
 }

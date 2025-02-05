@@ -45,7 +45,9 @@ final class ProfileViewController: UIViewController {
     }()
     
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private let storage = Storage()
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,16 +55,53 @@ final class ProfileViewController: UIViewController {
         setupViews()
         setupConstraints()
         
+        profileImageServiceObserver = NotificationCenter.default    // 2
+                    .addObserver(
+                        forName: ProfileImageService.didChangeNotification, // 3
+                        object: nil,                                        // 4
+                        queue: .main                                        // 5
+                    ) { [weak self] _ in
+                        guard let self = self else { return }
+                        self.updateAvatar()                                 // 6
+                    }
+                updateAvatar()                                              // 7
+        
         guard let token = storage.token else { return }
-        profileService.fetchProfile(token) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let profile):
-                    self?.nameLabel.text = profile.name
-                    self?.usernameLabel.text = profile.loginName
-                    self?.greetingLabel.text = profile.bio
-                case .failure(let error):
-                    print(error.localizedDescription)
+        
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
+        
+        if let imageURL = profileImageService.avatarURL {
+            updateProfilePicture(with: imageURL)
+        }
+    }
+    
+    private func updateAvatar() {                                   // 8
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+    }
+
+    private func updateProfileDetails(profile: Profile){
+        self.nameLabel.text = profile.name
+        self.usernameLabel.text = profile.loginName
+        self.greetingLabel.text = profile.bio
+    }
+    
+    
+    private func updateProfilePicture(with url: String){
+        if let url = URL(string: url) {
+            DispatchQueue.global().async { [weak self] in
+                guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else {
+                    print("Не удалось загрузить изображение.")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self?.avatarImageView.image = image
                 }
             }
         }
