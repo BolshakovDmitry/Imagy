@@ -149,23 +149,6 @@
             </objects>
             <point key="canvasLocation" x="-731.8840579710145" y="91.741071428571431"/>
         </scene>
-        <!--Profile-->
-        <scene sceneID="kni-9L-CzK">
-            <objects>
-                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="RkM-Fe-042" customClass="ProfileViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ukS-gI-W44">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="8LQ-fZ-BEo"/>
-                        <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="fj8-qd-voA"/>
-                    <navigationItem key="navigationItem" id="x3g-J0-Trv"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ddg-zy-L4T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="134.78260869565219" y="403.79464285714283"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="xki-sg-cPg">
             <objects>
@@ -380,7 +363,6 @@
         <image name="share_button" width="50" height="50"/>
         <image name="splash_screen_logo" width="73" height="75.5"/>
         <image name="tab_editorial_active" width="30" height="30"/>
-        <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Background">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

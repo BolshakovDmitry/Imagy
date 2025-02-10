@@ -53,6 +53,9 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Установка цвета фона
+        view.backgroundColor = UIColor(named: "YP Background")
+        
         setupViews()
         setupConstraints()
         
