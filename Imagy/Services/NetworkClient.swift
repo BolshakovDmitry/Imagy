@@ -5,19 +5,20 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case noData
 }
 
 enum AuthServiceError: Error {
     case invalidRequest
 }
 
-class NetworkClient: NetworkRouting {
+class NetworkClient{
     
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
     
-    func fetch(urlrequest: URLRequest, requiresCodeCheck: Bool? = nil, handler: @escaping (Result<Data, Error>) -> Void) {
+    func fetch<T: Decodable>(_ type: T.Type, urlrequest: URLRequest, requiresCodeCheck: Bool? = nil, handler: @escaping (Result<T, Error>) -> Void) {
         
         assert(Thread.isMainThread)                         // 4
         
@@ -55,10 +56,19 @@ class NetworkClient: NetworkRouting {
                 return
             }
             
-            // Возвращаем данные
-            guard let resultData = data else { return }
+           // Декодируем данные
+           guard let data = data else {
+               handler(.failure(NetworkError.noData))
+               return
+           }
            
-           handler(.success(resultData))
+           do {
+               let decodedData = try JSONDecoder().decode(T.self, from: data)
+               handler(.success(decodedData))
+           } catch {
+               print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
+               handler(.failure(error))
+           }
            
            self?.task = nil                            // 14
            self?.lastCode = nil

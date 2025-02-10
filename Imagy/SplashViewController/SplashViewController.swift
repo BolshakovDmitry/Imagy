@@ -1,6 +1,7 @@
 
 import Foundation
 import UIKit
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
     
@@ -22,6 +23,7 @@ final class SplashViewController: UIViewController {
         } else {
             performSegue(withIdentifier: showAuthenticationFlow, sender: nil)
         }
+        let token: String? = KeychainWrapper.standard.string(forKey: "Auth token")
     }
     
     override func viewWillAppear(_ animated: Bool) {

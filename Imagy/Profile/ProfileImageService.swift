@@ -15,28 +15,22 @@ final class ProfileImageService{
         
         guard let request = makeRequestWithToken(with: token) else { return }
     
-        networkClient.fetch(urlrequest: request, handler: { result in
+        networkClient.fetch(UserImage.self, urlrequest: request, handler: { result in
             
                     switch result {
                     case .success(let data):
                         do {
-                            let decodedData = try JSONDecoder().decode(UserImage.self, from: data)
-                            let avatarURL = decodedData.profileImage.small
-                            self.avatarURL = avatarURL
-                            completion(.success(avatarURL))
+                            self.avatarURL = data.profileImage.small
+                            completion(.success(self.avatarURL ?? ""))
                             
                             NotificationCenter.default                                     // 1
                                 .post(                                                     // 2
                                     name: ProfileImageService.didChangeNotification,       // 3
                                     object: self,                                          // 4
-                                    userInfo: ["URL": avatarURL])
-                        } catch {
-                            print("Ошибка декодирования: $error)")
-                            completion(.failure(error))
+                                    userInfo: ["URL": self.avatarURL])
                         }
                     case .failure(let error):
-                        print("Ошибка : $error)")
-                        print(error.localizedDescription)
+                        error.log(serviceName: "ProfileImageService", error: error, additionalInfo: self.avatarURL)
                     
                 }
             })

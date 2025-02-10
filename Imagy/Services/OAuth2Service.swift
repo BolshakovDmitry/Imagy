@@ -1,4 +1,4 @@
-
+import SwiftKeychainWrapper
 import Foundation
 
 final class OAuth2Service{
@@ -13,6 +13,7 @@ final class OAuth2Service{
     enum AuthServiceError: Error {
         case invalidRequest
     }
+    
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
@@ -28,24 +29,24 @@ final class OAuth2Service{
         return
         }
         
-        networkClient.fetch(urlrequest: request, requiresCodeCheck: true, handler: { [weak self] result in
+        networkClient.fetch(OAuthTokenResponseBody.self, urlrequest: request, requiresCodeCheck: true, handler: { [weak self] result in
             
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
                 case .success(let data):
-                    do {
-                        let token = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                        self.bearerToken = token.accessToken
-                        self.storage.store(with: self.bearerToken)
+                        self.bearerToken = data.accessToken
+                    self.storage.store(with: data.accessToken)
+                    
+                    let token = data.accessToken
+                    print(token)
+                    let isSuccess = KeychainWrapper.standard.set(token, forKey: "Auth token")
+                    guard isSuccess else { return }
                         handler(.success("Success"))
-                    } catch {
-                        print("Ошибка декодирования: $error)")
-                        handler(.failure(error))
-                    }
+
                 case .failure(let error):
-                    print(error.localizedDescription)
-                } 
+                    error.log(serviceName: "OAuth2Service", error: error, additionalInfo: "code: \(code)")
+                }
             }
         })
     }

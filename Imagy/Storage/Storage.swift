@@ -1,29 +1,31 @@
 
 import Foundation
+import SwiftKeychainWrapper
 
 final class Storage {
     
-    private var userDefaults = UserDefaults.standard
-    private enum Keys: String {
-        case token
-    }
-    
     var token: String? {
         get {
-            return userDefaults.string(forKey: Keys.token.rawValue)
+            return KeychainWrapper.standard.string(forKey: "Auth token")
         }
         set {
-            userDefaults.set(newValue, forKey: Keys.token.rawValue)
+            let token = "<Token пользователя>"
+            let isSuccess = KeychainWrapper.standard.set(token, forKey: "Auth token")
+            guard isSuccess else {
+                print("failed to store the token")
+                return
+            }
         }
     }
     
     func store(with token: String?) {
         self.token = token
     }
-    
-    func clearUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: Keys.token.rawValue)
-    }
+    func clear() {
+         // Очищаем Keychain
+         KeychainWrapper.standard.removeObject(forKey: "Auth token")
+     }
+
 }
 
 

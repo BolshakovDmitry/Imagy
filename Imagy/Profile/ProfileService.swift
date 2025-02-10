@@ -24,22 +24,17 @@ final class ProfileService{
         
         guard let request = makeRequestWithToken(with: token) else { return }
     
-        networkClient.fetch(urlrequest: request, handler: { result in
+        networkClient.fetch(ProfileResult.self, urlrequest: request, handler: { result in
             
                     switch result {
                     case .success(let data):
-                        do {
-                            let decodedData = try JSONDecoder().decode(ProfileResult.self, from: data)
-                            let decodedprofile = Profile(username: decodedData.userName, firstName: decodedData.firstName, lastName: decodedData.lastName, bio: decodedData.bio)
+
+                            let decodedprofile = Profile(username: data.userName, firstName: data.firstName, lastName: data.lastName, bio: data.bio)
                             self.profile = decodedprofile
                             completion(.success(decodedprofile))
-                        } catch {
-                            print("Ошибка декодирования: $error)")
-                            completion(.failure(error))
-                        }
+        
                     case .failure(let error):
-                        print("Ошибка : $error)")
-                        print(error.localizedDescription)
+                        error.log(serviceName: "ProfileService", error: error, additionalInfo: "code: \(String(describing: self.profile))")
                     
                 }
             })

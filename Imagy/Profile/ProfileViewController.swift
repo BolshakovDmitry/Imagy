@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -73,7 +74,7 @@ final class ProfileViewController: UIViewController {
         }
         
         if let imageURL = profileImageService.avatarURL {
-            updateProfilePicture(with: imageURL)
+            //updateProfilePicture(with: imageURL)
         }
     }
     
@@ -82,7 +83,11 @@ final class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(with: url,
+                              placeholder: UIImage(named: "placeholder.jpeg"),
+                              options: [.processor(processor)])
     }
 
     private func updateProfileDetails(profile: Profile){
@@ -92,20 +97,20 @@ final class ProfileViewController: UIViewController {
     }
     
     
-    private func updateProfilePicture(with url: String){
-        if let url = URL(string: url) {
-            DispatchQueue.global().async { [weak self] in
-                guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else {
-                    print("Не удалось загрузить изображение.")
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    self?.avatarImageView.image = image
-                }
-            }
-        }
-    }
+//    private func updateProfilePicture(with url: String){
+//        if let url = URL(string: url) {
+//            DispatchQueue.global().async { [weak self] in
+//                guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else {
+//                    print("Не удалось загрузить изображение.")
+//                    return
+//                }
+//                
+//                DispatchQueue.main.async {
+//                    self?.avatarImageView.image = image
+//                }
+//            }
+//        }
+//    }
     
     private func setupViews() {
         view.addSubview(avatarImageView)

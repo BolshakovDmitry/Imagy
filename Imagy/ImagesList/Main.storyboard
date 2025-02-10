@@ -15,11 +15,11 @@
             <objects>
                 <viewController title="ImageList" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0ZD-Gs-GgP">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" name="YP Background"/>
                                 <prototypes>
@@ -133,7 +133,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="NEu-no-DKT">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" modalPresentationStyle="fullScreen" id="cyd-jc-AdQ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" modalPresentationStyle="fullScreen" id="cyd-jc-AdQ" customClass="TabBarController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="iqC-Ye-SVq"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Soy-nL-hki">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -144,10 +144,6 @@
                             <color key="backgroundColor" name="YP Background"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="RZm-1e-8PM" kind="relationship" relationship="viewControllers" id="9aj-Zw-4Hm"/>
-                        <segue destination="RkM-Fe-042" kind="relationship" relationship="viewControllers" id="Pbr-Dv-OA3"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyG-Dd-Gbo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -156,9 +152,9 @@
         <!--Profile-->
         <scene sceneID="kni-9L-CzK">
             <objects>
-                <viewController title="Profile" id="RkM-Fe-042" customClass="ProfileViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="RkM-Fe-042" customClass="ProfileViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ukS-gI-W44">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="8LQ-fZ-BEo"/>
                         <color key="backgroundColor" red="0.1019607843" green="0.1058823529" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -173,11 +169,11 @@
         <!--Navigation Controller-->
         <scene sceneID="xki-sg-cPg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RZm-1e-8PM" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ImagesListViewController" automaticallyAdjustsScrollViewInsets="NO" id="RZm-1e-8PM" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="wmD-Ak-sbp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gaD-GM-TWq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="YP White"/>
                         <navigationBarAppearance key="standardAppearance">

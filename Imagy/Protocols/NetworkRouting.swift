@@ -1,6 +1,7 @@
-
 import Foundation
 
 protocol NetworkRouting {
-    func fetch(urlrequest: URLRequest, requiresCodeCheck: Bool?, handler: @escaping (Result<Data, Error>) -> Void)
+    associatedtype T: Codable // Ассоциированный тип, который должен соответствовать протоколу Codable
+    
+    func fetch(_ type: T.Type, urlRequest: URLRequest, requiresCodeCheck: Bool?, handler: @escaping (Result<T, Error>) -> Void)
 }
