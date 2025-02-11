@@ -3,14 +3,13 @@ import Foundation
 
 final class ProfileImageService{
     
+    static let shared = ProfileImageService()
+    private init(){}
+    
     private (set) var avatarURL: String?
     private let networkClient = NetworkClient()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
-    
-    static let shared = ProfileImageService()
-    private init(){}
- 
     func fetchProfileImageURL(token: String, _ completion: @escaping (Result<String, Error>) -> Void){
         
         guard let request = makeRequestWithToken(with: token) else { return }

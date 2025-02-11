@@ -14,11 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)                   // 1
-        window?.rootViewController = UIStoryboard(              // 2
-            name: "Main",
-            bundle: .main
-        ).instantiateInitialViewController()
+        window = UIWindow(windowScene: scene)
+        
+        // Здесь создается экземпляр SplashViewController из Main.storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let splashViewController = storyboard.instantiateViewController(identifier: "SplashViewController") as! SplashViewController
+        
+        window?.rootViewController = splashViewController
         window?.makeKeyAndVisible()
     }
     

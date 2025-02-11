@@ -164,10 +164,10 @@
 		B296D2372D19AD3E00880E1D /* Imagy */ = {
 			isa = PBXGroup;
 			children = (
+				B2C8915D2D43B72B00DF4430 /* SplashViewController */,
 				B293E4A32D5A2A4300F3A261 /* TabBarController */,
 				B293E4A12D5A283100F3A261 /* TabBarController.swift */,
 				B2C891622D4901D900DF4430 /* Constans */,
-				B2C8915D2D43B72B00DF4430 /* SplashViewController */,
 				B2C8915A2D428A1B00DF4430 /* Storage */,
 				B2C891572D424B5E00DF4430 /* Models */,
 				B2C891502D410D4F00DF4430 /* Services */,
