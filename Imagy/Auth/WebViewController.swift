@@ -12,7 +12,7 @@ final class WebViewController: UIViewController {
     fileprivate enum WebViewConstants {
         static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,42 +21,20 @@ final class WebViewController: UIViewController {
         
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
-            options: [],
-            changeHandler: { [weak self] _, _ in
-                guard let self = self else { return }
-                self.updateProgress()
-            })
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // NOTE: Since the class is marked as `final` we don't need to pass a context.
-        // In case of inhertiance context must not be nil.
-//        webView.addObserver(
-//            self,
-//            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-//            options: .new,
-//            context: nil)
-//        updateProgress()
-        
-        
     }
-
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        //webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
-//    }
-//    
-////    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-////        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-////            updateProgress()
-////        } else {
-////            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-////        }
-////    }
-
+    
     private func updateProgress() {
+        progressView.progress = Float(0.0)
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
@@ -79,7 +57,7 @@ final class WebViewController: UIViewController {
             print("Failed to construct final URL")
             return
         }
-
+        
         let request = URLRequest(url: url)
         webView.load(request)
     }
@@ -93,14 +71,14 @@ extension WebViewController: WKNavigationDelegate {
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if let code = code(from: navigationAction) {
-            delegate?.webViewViewController(self, didAuthenticateWithCode: code) 
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             UIBlockingProgressHUD.show()
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
     }
-
+    
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if
             let url = navigationAction.request.url,
@@ -110,8 +88,8 @@ extension WebViewController: WKNavigationDelegate {
             let codeItem = items.first(where: { $0.name == "code" })
         {
             if let value = codeItem.value {
-                     print(value) 
-                 }
+                print(value)
+            }
             return codeItem.value
             
         } else {

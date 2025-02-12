@@ -6,22 +6,9 @@ final class SplashViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     
-    private var splashImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "splash_screen_logo")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .ypBackground
-        view.addSubview(splashImageView)
-        NSLayoutConstraint.activate([
-            splashImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            splashImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
+        addImage()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,12 +18,30 @@ final class SplashViewController: UIViewController {
             guard let token = storage.token else { return }
             fetchProfile(token: token)
             fetchProfileImage(token: token)
-            switchToTabBarController()
         } else {
             presentAuthenticationScreen()
         }
     }
-
+    
+    private func addImage(){
+        let splashImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "splash_screen_logo")
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
+        
+        view.backgroundColor = .ypBackground
+        view.addSubview(splashImageView)
+        
+        NSLayoutConstraint.activate([
+            splashImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
+    }
+    
     private func presentAuthenticationScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         guard let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
@@ -62,31 +67,33 @@ final class SplashViewController: UIViewController {
     }
     
     private func fetchProfile(token: String) {
-        UIBlockingProgressHUD.show()
+        DispatchQueue.main.async {
+            UIBlockingProgressHUD.show()
+        }
         
         profileService.fetchProfile(token) { [weak self] result in
-            UIBlockingProgressHUD.dissimiss()
-            
             DispatchQueue.main.async {
+                UIBlockingProgressHUD.dissimiss()
+                guard let self = self else { return }
                 switch result {
+                    
                 case .success(_):
-                    self?.switchToTabBarController()
+                    self.switchToTabBarController()
+                    
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    AlertPresenter.showAlert(
+                        title: error.localizedDescription,
+                        message: "Не удалось загрузить данные профиля",
+                        buttonText: "Ок",
+                        on: self
+                    )
                 }
             }
         }
     }
     
     private func fetchProfileImage(token: String) {
-        profileImageService.fetchProfileImageURL(token: token) { result in
-            switch result {
-            case .success(let pictureURL):
-                print(pictureURL)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        profileImageService.fetchProfileImageURL(token: token)
     }
 }
 

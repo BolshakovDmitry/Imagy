@@ -8,25 +8,19 @@ final class OAuth2Service{
     
     private let networkClient = NetworkClient()
     private let storage = Storage()
-    private var bearerToken = ""
-    
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
     enum AuthServiceError: Error {
         case invalidRequest
     }
     
-    private let urlSession = URLSession.shared
-    private var task: URLSessionTask?
-    private var lastCode: String?
-    
-    
     func fetchOAuthToken(code: String, handler: @escaping (Result<String, Error>) -> Void) {
         
-        guard
-        let request = makeOAuthTokenRequest(code: code)           // 11
+        guard let request = makeOAuthTokenRequest(code: code)
         else {
-            print("Invalid request")
             handler(.failure(AuthServiceError.invalidRequest))
-        return
+            return
         }
         
         networkClient.fetch(OAuthTokenResponseBody.self, urlrequest: request, requiresCodeCheck: true, handler: { [weak self] result in
@@ -35,22 +29,16 @@ final class OAuth2Service{
                 guard let self = self else { return }
                 switch result {
                 case .success(let data):
-                        self.bearerToken = data.accessToken
                     self.storage.store(with: data.accessToken)
+                    handler(.success("Success"))
                     
-                    let token = data.accessToken
-                    print(token)
-                    let isSuccess = KeychainWrapper.standard.set(token, forKey: "Auth token")
-                    guard isSuccess else { return }
-                        handler(.success("Success"))
-
                 case .failure(let error):
                     error.log(serviceName: "OAuth2Service", error: error, additionalInfo: "code: \(code)")
                 }
             }
         })
     }
-     
+    
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var components = URLComponents(string: "https://unsplash.com/oauth/token") else { fatalError("Failed to create base URL") }
         let queryItems = [

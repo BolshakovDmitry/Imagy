@@ -287,7 +287,7 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jPi-J1-K24">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="jPi-J1-K24">
                                 <rect key="frame" x="0.0" y="92" width="414" height="4"/>
                                 <color key="progressTintColor" name="YP Background"/>
                             </progressView>
@@ -317,7 +317,8 @@
         <!--Item-->
         <scene sceneID="BOu-8m-5PK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="sW1-q9-oAW" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZyF-eZ-szv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="Item" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="sW1-q9-oAW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="j3D-8b-93d"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="c4n-dp-hEc"/>
@@ -330,7 +331,6 @@
                         <segue destination="2qo-Cd-RJg" kind="relationship" relationship="rootViewController" id="pBY-5c-Z7K"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZyF-eZ-szv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-732" y="-984"/>
         </scene>

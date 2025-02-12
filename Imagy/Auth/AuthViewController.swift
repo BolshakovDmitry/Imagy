@@ -42,21 +42,18 @@ extension AuthViewController: WebViewControllerDelegate {
             case .success(_):
                 UIBlockingProgressHUD.dissimiss()
                 self.delegate?.didAuthenticate(self)
-            case .failure(let error):
-                print(error)
+            case .failure(_):
                 AlertPresenter.showAlert(
-                            title: "Что-то пошло не так",
-                            message: "Не удалось войти в систему",
-                            buttonText: "Ок",
-                            on: self
-                        )
-                
+                    title: "Что-то пошло не так",
+                    message: "Не удалось войти в систему",
+                    buttonText: "Ок",
+                    on: self
+                )
             }
         }
     }
-
+    
     func webViewViewControllerDidCancel(_ vc: WebViewController) {
         vc.dismiss(animated: true)
-        print("dismissed")
     }
 }

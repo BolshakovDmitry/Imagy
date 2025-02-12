@@ -53,67 +53,51 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Установка цвета фона
         view.backgroundColor = UIColor(named: "YP Background")
         
         setupViews()
         setupConstraints()
         
-        profileImageServiceObserver = NotificationCenter.default    // 2
-                    .addObserver(
-                        forName: ProfileImageService.didChangeNotification, // 3
-                        object: nil,                                        // 4
-                        queue: .main                                        // 5
-                    ) { [weak self] _ in
-                        guard let self = self else { return }
-                        self.updateAvatar()                                 // 6
-                    }
-                updateAvatar()                                              // 7
-        
-        guard let token = storage.token else { return }
+        // Подписываемся на уведомление
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main,
+                using: { [weak self] _ in
+                    guard let self else { return }
+                    self.updateAvatar()
+                })
+        updateAvatar()
         
         if let profile = profileService.profile {
             updateProfileDetails(profile: profile)
         }
         
-        if let imageURL = profileImageService.avatarURL {
-            //updateProfilePicture(with: imageURL)
-        }
     }
     
-    private func updateAvatar() {                                   // 8
+    
+    
+    
+    private func updateAvatar() {
+        print("in the updateAvatar")
         guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let profileImageURL = ProfileImageService.shared.avatarUrl,
             let url = URL(string: profileImageURL)
         else { return }
+        
         let processor = RoundCornerImageProcessor(cornerRadius: 20)
         avatarImageView.kf.indicatorType = .activity
         avatarImageView.kf.setImage(with: url,
-                              placeholder: UIImage(named: "placeholder.jpeg"),
-                              options: [.processor(processor)])
+                                    placeholder: UIImage(named: "placeholder.jpeg"),
+                                    options: [.processor(processor)])
     }
-
+    
     private func updateProfileDetails(profile: Profile){
         self.nameLabel.text = profile.name
         self.usernameLabel.text = profile.loginName
         self.greetingLabel.text = profile.bio
     }
-    
-    
-//    private func updateProfilePicture(with url: String){
-//        if let url = URL(string: url) {
-//            DispatchQueue.global().async { [weak self] in
-//                guard let data = try? Data(contentsOf: url), let image = UIImage(data: data) else {
-//                    print("Не удалось загрузить изображение.")
-//                    return
-//                }
-//                
-//                DispatchQueue.main.async {
-//                    self?.avatarImageView.image = image
-//                }
-//            }
-//        }
-//    }
     
     private func setupViews() {
         view.addSubview(avatarImageView)

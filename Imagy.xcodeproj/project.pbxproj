@@ -36,7 +36,6 @@
 		B2C8914F2D3FC28100DF4430 /* WebViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8914E2D3FC28100DF4430 /* WebViewControllerDelegate.swift */; };
 		B2C891522D410D7000DF4430 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891512D410D7000DF4430 /* OAuth2Service.swift */; };
 		B2C891542D42374400DF4430 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891532D42374400DF4430 /* NetworkClient.swift */; };
-		B2C891562D42377800DF4430 /* NetworkRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891552D42377800DF4430 /* NetworkRouting.swift */; };
 		B2C891592D424B7500DF4430 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891582D424B7500DF4430 /* OAuthTokenResponseBody.swift */; };
 		B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915B2D428A6300DF4430 /* Storage.swift */; };
 		B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915E2D43B73700DF4430 /* SplashViewController.swift */; };
@@ -91,7 +90,6 @@
 		B2C8914E2D3FC28100DF4430 /* WebViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewControllerDelegate.swift; sourceTree = "<group>"; };
 		B2C891512D410D7000DF4430 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		B2C891532D42374400DF4430 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
-		B2C891552D42377800DF4430 /* NetworkRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouting.swift; sourceTree = "<group>"; };
 		B2C891582D424B7500DF4430 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		B2C8915B2D428A6300DF4430 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		B2C8915E2D43B73700DF4430 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				B2C8914E2D3FC28100DF4430 /* WebViewControllerDelegate.swift */,
-				B2C891552D42377800DF4430 /* NetworkRouting.swift */,
 				B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */,
 			);
 			path = Protocols;
@@ -446,7 +443,6 @@
 				B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */,
 				B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */,
 				B293E4A22D5A283100F3A261 /* TabBarController.swift in Sources */,
-				B2C891562D42377800DF4430 /* NetworkRouting.swift in Sources */,
 				B2901AE32D50E97A00AD6B0A /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
