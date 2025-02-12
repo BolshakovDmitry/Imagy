@@ -1,4 +1,4 @@
-
+import SwiftKeychainWrapper
 import Foundation
 
 final class OAuth2Service{
@@ -8,34 +8,38 @@ final class OAuth2Service{
     
     private let networkClient = NetworkClient()
     private let storage = Storage()
-    private var bearerToken = ""
+    private let urlSession = URLSession.shared
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    enum AuthServiceError: Error {
+        case invalidRequest
+    }
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<String, Error>) -> Void) {
         
-       let request = makeOAuthTokenRequest(code: code)
+        guard let request = makeOAuthTokenRequest(code: code)
+        else {
+            handler(.failure(AuthServiceError.invalidRequest))
+            return
+        }
         
-        networkClient.fetch(urlrequest: request, handler: { [weak self] result in
+        networkClient.fetch(OAuthTokenResponseBody.self, urlrequest: request, requiresCodeCheck: true, handler: { [weak self] result in
+            
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 switch result {
                 case .success(let data):
-                    do {
-                        let token = try JSONDecoder().decode(OAuthTokenResponseBody.self, from: data)
-                        self.bearerToken = token.accessToken
-                        self.storage.store(with: self.bearerToken)
-                        handler(.success("Success"))
-                    } catch {
-                        print("Ошибка декодирования: $error)")
-                        handler(.failure(error))
-                    }
+                    self.storage.store(with: data.accessToken)
+                    handler(.success("Success"))
+                    
                 case .failure(let error):
-                    print(error.localizedDescription)
-                } 
+                    error.log(serviceName: "OAuth2Service", error: error, additionalInfo: "code: \(code)")
+                }
             }
         })
     }
-     
-    private func makeOAuthTokenRequest(code: String) -> URLRequest {
+    
+    private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard var components = URLComponents(string: "https://unsplash.com/oauth/token") else { fatalError("Failed to create base URL") }
         let queryItems = [
             URLQueryItem(name: "client_id", value: Constants.accessKey),
@@ -45,8 +49,8 @@ final class OAuth2Service{
             URLQueryItem(name: "grant_type", value: "authorization_code")
         ]
         components.queryItems = queryItems
-        guard let url = components.url else { fatalError("Failed to create final URL") }
-        
+        guard let url = components.url else {  assertionFailure("Failed to create URL")
+            return nil  }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         return request

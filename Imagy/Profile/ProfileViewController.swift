@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
@@ -44,11 +45,58 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private let storage = Storage()
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(named: "YP Background")
+        
         setupViews()
         setupConstraints()
+        
+        // Подписываемся на уведомление
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main,
+                using: { [weak self] _ in
+                    guard let self else { return }
+                    self.updateAvatar()
+                })
+        updateAvatar()
+        
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
+        
+    }
+    
+    
+    
+    
+    private func updateAvatar() {
+        print("in the updateAvatar")
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarUrl,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(with: url,
+                                    placeholder: UIImage(named: "placeholder.jpeg"),
+                                    options: [.processor(processor)])
+    }
+    
+    private func updateProfileDetails(profile: Profile){
+        self.nameLabel.text = profile.name
+        self.usernameLabel.text = profile.loginName
+        self.greetingLabel.text = profile.bio
     }
     
     private func setupViews() {
