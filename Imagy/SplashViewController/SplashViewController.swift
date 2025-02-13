@@ -11,6 +11,15 @@ final class SplashViewController: UIViewController {
         addImage()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+         setNeedsStatusBarAppearanceUpdate()
+     }
+
+     override var preferredStatusBarStyle: UIStatusBarStyle {
+         .lightContent
+     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
