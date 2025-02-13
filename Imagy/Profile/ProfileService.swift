@@ -33,7 +33,6 @@ final class ProfileService {
                 completion(.success(profile))
                 
             case .failure(let error):
-                error.log(serviceName: "ProfileService", error: error, additionalInfo: "token: \(token)")
                 completion(.failure(error))
             }
         }
@@ -46,7 +45,6 @@ final class ProfileService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        // Логирование запроса
         logRequest(request: request)
         
         return request

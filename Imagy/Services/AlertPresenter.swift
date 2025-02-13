@@ -6,7 +6,8 @@ final class AlertPresenter {
         title: String,
         message: String,
         buttonText: String = "Ок",
-        on viewController: UIViewController
+        on viewController: UIViewController,
+        completion: (() -> Void)? = nil
     ) {
         let alert = UIAlertController(
             title: title,
@@ -15,7 +16,7 @@ final class AlertPresenter {
         )
         
         let action = UIAlertAction(title: buttonText, style: .default) { _ in
-            // Действие при нажатии на кнопку (опционально)
+            completion?()
         }
         
         alert.addAction(action)

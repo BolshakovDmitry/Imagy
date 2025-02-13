@@ -81,12 +81,17 @@ final class SplashViewController: UIViewController {
                     self.switchToTabBarController()
                     
                 case .failure(let error):
+                    var statusC: String?
+                    if case let NetworkError.httpStatusCode(statusCode) = error {
+                        statusC = String(statusCode)
+                    }
                     AlertPresenter.showAlert(
-                        title: error.localizedDescription,
-                        message: "Не удалось загрузить данные профиля",
+                        title: "Не удалось загрузить данные профиля",
+                        message: "Ошибка -  \(statusC ?? error.localizedDescription)",
                         buttonText: "Ок",
-                        on: self
-                    )
+                        on: self) { [weak self] in
+                            self?.presentAuthenticationScreen()
+                        }
                 }
             }
         }
