@@ -5,8 +5,10 @@ final class ProfileViewController: UIViewController {
     
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "avatar")
+        imageView.image = UIImage(named: "placeholder.jpeg")
         imageView.tintColor = .gray
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 35
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -75,23 +77,33 @@ final class ProfileViewController: UIViewController {
         }
         
     }
+            
+        private func updateAvatar() {
+            guard
+                let profileImageURL = ProfileImageService.shared.avatarUrl
+            else { return }
+            
+            if let url = URL(string: profileImageURL) {
+                KingfisherManager.shared.retrieveImage(with: url) { result in
+                    switch result {
+                    case .success(let imageResult):
+                        let imageSize = imageResult.image.size
+                        let cornerRadius = imageSize.width * 0.5 // 50% от ширины изображения
+                        
+                        let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
+                        DispatchQueue.main.async {
+                            self.avatarImageView.kf.setImage(
+                                with: url,
+                                options: [.processor(processor)]
+                            )
+                        }
+                    case .failure(let error):
+                        print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
     
-    
-    
-    
-    private func updateAvatar() {
-        print("in the updateAvatar")
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarUrl,
-            let url = URL(string: profileImageURL)
-        else { return }
-        
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
-        avatarImageView.kf.indicatorType = .activity
-        avatarImageView.kf.setImage(with: url,
-                                    placeholder: UIImage(named: "placeholder.jpeg"),
-                                    options: [.processor(processor)])
-    }
     
     private func updateProfileDetails(profile: Profile){
         self.nameLabel.text = profile.name

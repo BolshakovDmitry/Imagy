@@ -18,10 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Здесь создается экземпляр SplashViewController из Main.storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
-        let splashViewController = storyboard.instantiateViewController(identifier: "SplashViewController") as! SplashViewController
+        guard let splashViewController = storyboard.instantiateViewController(identifier: "SplashViewController") as? SplashViewController
+        else { return }
+            window?.rootViewController = splashViewController
+            window?.makeKeyAndVisible()
         
-        window?.rootViewController = splashViewController
-        window?.makeKeyAndVisible()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -15,31 +15,25 @@ final class ProfileImageService{
         guard let request = makeRequestWithToken(with: token) else { return }
         
         networkClient.fetch(UserImage.self, urlrequest: request, handler: { [weak self] result in
-            
             switch result {
-                
             case .success(let data):
-                
-                let profileImageURL = data.profileImage.small
+                let profileImageURL = data.profileImage.large
                 self?.avatarUrl = profileImageURL
-                
-                
                 // Отправляем уведомление
                 NotificationCenter.default.post(
                     name: ProfileImageService.didChangeNotification,
                     object: self,
                     userInfo: ["URL": profileImageURL]
                 )
-                
             case .failure(let error):
                 error.log(serviceName: "ProfileImageService", error: error, additionalInfo: self?.avatarUrl)
             }
-        }                       
+        }
         )
     }
     
     private func makeRequestWithToken(with token: String) -> URLRequest? {
-        guard let baseURL = URL(string: "https://api.unsplash.com/me") else {
+        guard let baseURL = URL(string: Constants.profileURLString) else {
             return nil
         }
         var request = URLRequest(url: baseURL)

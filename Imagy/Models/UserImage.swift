@@ -4,10 +4,10 @@ struct UserImage: Codable {
     let profileImage: ProfileImage
     
     struct ProfileImage: Codable {
-        let small: String
+        let large: String
    
         private enum CodingKeys: String, CodingKey {
-            case small = "small"
+            case large = "large"
 
         }
     }

@@ -27,19 +27,20 @@ final class ProfileService {
                     username: profileResult.userName,
                     firstName: profileResult.firstName,
                     lastName: profileResult.lastName,
-                    bio: profileResult.bio
+                    bio: profileResult.bio ?? ""
                 )
                 self?.profile = profile
                 completion(.success(profile))
                 
             case .failure(let error):
+                error.log(serviceName: "ProfileImage", error: error)
                 completion(.failure(error))
             }
         }
     }
     
     private func makeRequestWithToken(with token: String) -> URLRequest? {
-        guard let baseURL = URL(string: "https://api.unsplash.com/me") else { return nil }
+        guard let baseURL = URL(string: Constants.profileURLString) else { return nil }
         
         var request = URLRequest(url: baseURL)
         request.httpMethod = "GET"

@@ -6,6 +6,7 @@ enum NetworkError: Error {
     case urlRequestError(Error)
     case urlSessionError
     case noData
+    case decodeError
 }
 
 enum AuthServiceError: Error {
@@ -13,7 +14,7 @@ enum AuthServiceError: Error {
     case repeatedCode
 }
 
-class NetworkClient{
+final class NetworkClient{
     
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
@@ -42,16 +43,17 @@ class NetworkClient{
             
             
             if let error = error {
+                error.log(serviceName: "NetworkClient", error: error, additionalInfo: "NetworkError.urlRequestError")  // логирование ошибок
                 handler(.failure(NetworkError.urlRequestError(error)))
-                print("Fetch method error")
                 return
             }
             
             
             if let response = response as? HTTPURLResponse,
                response.statusCode < 200 || response.statusCode >= 300 {
+                let error = NetworkError.httpStatusCode(response.statusCode)
+                error.log(serviceName: "NetworkClient", error: error, additionalInfo: "NetworkError.httpStatusCodeError")
                 handler(.failure(NetworkError.httpStatusCode(response.statusCode)))
-                print(response.statusCode)
                 guard let data else { return }
                 print(String(data: data, encoding: .utf8) as Any)
                 return
@@ -59,16 +61,18 @@ class NetworkClient{
             
             
             guard let data = data else {
+                let error = NetworkError.noData
+                error.log(serviceName: "NetworkClient", error: error, additionalInfo: "NetworkError.noData")
                 handler(.failure(NetworkError.noData))
                 return
             }
-            
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 handler(.success(decodedData))
             } catch {
-                print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
-                handler(.failure(error))
+                let error = NetworkError.decodeError
+                error.log(serviceName: "NetworkClient", error: error, additionalInfo: "NetworkError.decodeError")
+                handler(.failure(NetworkError.decodeError))
             }
             
             self?.task = nil

@@ -40,15 +40,16 @@ extension AuthViewController: WebViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code: code) { result in
             switch result {
             case .success(_):
-                UIBlockingProgressHUD.dissimiss()
+                UIBlockingProgressHUD.dismiss()
                 self.delegate?.didAuthenticate(self)
             case .failure(_):
                 AlertPresenter.showAlert(
                     title: "Что-то пошло не так",
                     message: "Не удалось войти в систему",
                     buttonText: "Ок",
-                    on: self
-                )
+                    on: self) {
+                        UIBlockingProgressHUD.dismiss()
+                    }
             }
         }
     }
