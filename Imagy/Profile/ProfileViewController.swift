@@ -1,11 +1,14 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "avatar")
+        imageView.image = UIImage(named: "placeholder.jpeg")
         imageView.tintColor = .gray
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 35
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -44,11 +47,68 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private let storage = Storage()
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(named: "YP Background")
+        
         setupViews()
         setupConstraints()
+        
+        // Подписываемся на уведомление
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main,
+                using: { [weak self] _ in
+                    guard let self else { return }
+                    self.updateAvatar()
+                })
+        updateAvatar()
+        
+        if let profile = profileService.profile {
+            updateProfileDetails(profile: profile)
+        }
+        
+    }
+            
+        private func updateAvatar() {
+            guard
+                let profileImageURL = ProfileImageService.shared.avatarUrl
+            else { return }
+            
+            if let url = URL(string: profileImageURL) {
+                KingfisherManager.shared.retrieveImage(with: url) { result in
+                    switch result {
+                    case .success(let imageResult):
+                        let imageSize = imageResult.image.size
+                        let cornerRadius = imageSize.width * 0.5 // 50% от ширины изображения
+                        
+                        let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
+                        DispatchQueue.main.async {
+                            self.avatarImageView.kf.setImage(
+                                with: url,
+                                options: [.processor(processor)]
+                            )
+                        }
+                    case .failure(let error):
+                        print("Ошибка загрузки изображения: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    
+    
+    private func updateProfileDetails(profile: Profile){
+        self.nameLabel.text = profile.name
+        self.usernameLabel.text = profile.loginName
+        self.greetingLabel.text = profile.bio
     }
     
     private func setupViews() {

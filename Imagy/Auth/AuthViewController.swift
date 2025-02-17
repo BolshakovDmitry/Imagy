@@ -1,4 +1,5 @@
 import UIKit
+import ProgressHUD
 
 final class AuthViewController: UIViewController {
     
@@ -39,15 +40,21 @@ extension AuthViewController: WebViewControllerDelegate {
         oauth2Service.fetchOAuthToken(code: code) { result in
             switch result {
             case .success(_):
+                UIBlockingProgressHUD.dismiss()
                 self.delegate?.didAuthenticate(self)
-            case .failure(let error):
-                print(error)
+            case .failure(_):
+                AlertPresenter.showAlert(
+                    title: "Что-то пошло не так",
+                    message: "Не удалось войти в систему",
+                    buttonText: "Ок",
+                    on: self) {
+                        UIBlockingProgressHUD.dismiss()
+                    }
             }
         }
     }
-
+    
     func webViewViewControllerDidCancel(_ vc: WebViewController) {
         vc.dismiss(animated: true)
-        print("dismissed")
     }
 }

@@ -1,72 +1,122 @@
-
-import Foundation
 import UIKit
+import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
-    
     private let storage = Storage()
-    private let showMainFlow = "showMainFlow"
-    private let showAuthenticationFlow = "showAuthenticationFlow"
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addImage()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+         setNeedsStatusBarAppearanceUpdate()
+     }
+
+     override var preferredStatusBarStyle: UIStatusBarStyle {
+         .lightContent
+     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if storage.token != nil { // проверка наличия токена
-            performSegue(withIdentifier: showMainFlow, sender: nil)
+        if storage.token != nil {
+            guard let token = storage.token else { return }
+            fetchProfile(token: token)
+            fetchProfileImage(token: token)
         } else {
-            performSegue(withIdentifier: showAuthenticationFlow, sender: nil)
+            presentAuthenticationScreen()
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setNeedsStatusBarAppearanceUpdate()
+    private func addImage(){
+        let splashImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.image = UIImage(named: "splash_screen_logo")
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            return imageView
+        }()
+        
+        view.backgroundColor = .ypBackground
+        view.addSubview(splashImageView)
+        
+        NSLayoutConstraint.activate([
+            splashImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+        
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Проверим, что переходим на авторизацию
-        if segue.identifier == "showAuthenticationFlow" {
-            
-            // Доберёмся до первого контроллера в навигации.
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else {
-                assertionFailure("Failed to prepare for \("showAuthenticationFlow")")
-                return
-            }
-            
-            // Установим делегатом контроллера наш SplashViewController
-            viewController.delegate = self
-            
-        } else {
-            super.prepare(for: segue, sender: sender)
+    private func presentAuthenticationScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        guard let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
+            assertionFailure("Failed to instantiate authentication controller")
+            return
         }
+        
+        authVC.modalPresentationStyle = .fullScreen
+        authVC.delegate = self
+        present(authVC, animated: true)
     }
     
     private func switchToTabBarController() {
-        // Получаем экземпляр `window` приложения
         guard let window = UIApplication.shared.windows.first else {
             assertionFailure("Invalid window configuration")
             return
         }
         
-        // Создаём экземпляр нужного контроллера из Storyboard с помощью ранее заданного идентификатора
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
         
-        // Установим в `rootViewController` полученный контроллер
         window.rootViewController = tabBarController
+    }
+    
+    private func fetchProfile(token: String) {
+        DispatchQueue.main.async {
+            UIBlockingProgressHUD.show()
+        }
+        
+        profileService.fetchProfile(token) { [weak self] result in
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.dismiss()
+                guard let self = self else { return }
+                switch result {
+                    
+                case .success(_):
+                    self.switchToTabBarController()
+                    
+                case .failure(let error):
+                    var statusC: String?
+                    if case let NetworkError.httpStatusCode(statusCode) = error {
+                        statusC = String(statusCode)
+                    }
+                    AlertPresenter.showAlert(
+                        title: "Не удалось загрузить данные профиля",
+                        message: "Ошибка -  \(statusC ?? error.localizedDescription)",
+                        buttonText: "Ок",
+                        on: self) { [weak self] in
+                            self?.presentAuthenticationScreen()
+                        }
+                }
+            }
+        }
+    }
+    
+    private func fetchProfileImage(token: String) {
+        profileImageService.fetchProfileImageURL(token: token)
     }
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {
         vc.dismiss(animated: true)
+        guard let token = storage.token else { return }
+        fetchProfile(token: token)
+        fetchProfileImage(token: token)
         switchToTabBarController()
     }
 }
