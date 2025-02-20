@@ -5,6 +5,7 @@ final class SplashViewController: UIViewController {
     private let storage = Storage()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    private let imagesListService = ImagesListService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,7 @@ final class SplashViewController: UIViewController {
             guard let token = storage.token else { return }
             fetchProfile(token: token)
             fetchProfileImage(token: token)
+            imagesListService.fetchPhotosNextPage(token: token)
         } else {
             presentAuthenticationScreen()
         }

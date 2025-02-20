@@ -40,12 +40,12 @@ final class ProfileImageService{
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        print("URL: \(request.url?.absoluteString ?? "failed to build URL from makeRequestWithToken method in ProfileImageService")")
-        if let headers = request.allHTTPHeaderFields {
-            print("Headers: \(headers)")
-        } else {
-            print("No headers found")
-        }
+//        print("URL: \(request.url?.absoluteString ?? "failed to build URL from makeRequestWithToken method in ProfileImageService")")
+//        if let headers = request.allHTTPHeaderFields {
+//            print("Headers: \(headers)")
+//        } else {
+//            print("No headers found")
+//        }
         
         return request
     }

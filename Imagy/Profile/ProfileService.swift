@@ -46,7 +46,7 @@ final class ProfileService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        logRequest(request: request)
+       // logRequest(request: request)
         
         return request
     }

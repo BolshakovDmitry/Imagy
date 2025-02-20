@@ -67,7 +67,9 @@ final class NetworkClient{
                 return
             }
             do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601 // Указываем формат даты
+                let decodedData = try decoder.decode(T.self, from: data)
                 handler(.success(decodedData))
             } catch {
                 let error = NetworkError.decodeError

@@ -48,6 +48,9 @@
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="like_button_on"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked" destination="pZ9-It-hcX" eventType="touchUpInside" id="7Aa-Gm-DSa"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-qv-kLf" userLabel="Date Label">
                                                     <rect key="frame" x="24" y="196" width="101.5" height="16"/>
@@ -105,8 +108,8 @@
         <!--Splash View Controller-->
         <scene sceneID="3ab-kn-xWn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iMc-cv-0qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SplashViewController" modalPresentationStyle="fullScreen" id="4fP-uN-LC7" customClass="SplashViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iMc-cv-0qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1936" y="-401"/>
         </scene>
@@ -317,7 +320,6 @@
         <!--Item-->
         <scene sceneID="BOu-8m-5PK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZyF-eZ-szv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="Item" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="sW1-q9-oAW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="j3D-8b-93d"/>
                     <toolbarItems/>
@@ -331,6 +333,7 @@
                         <segue destination="2qo-Cd-RJg" kind="relationship" relationship="rootViewController" id="pBY-5c-Z7K"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZyF-eZ-szv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-732" y="-984"/>
         </scene>
