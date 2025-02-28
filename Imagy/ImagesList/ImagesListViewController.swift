@@ -53,26 +53,49 @@ final class ImagesListViewController: UIViewController {
             
             // Получаем фото из массива photos
             let photo = photos[indexPath.row]
-            
-            // Загружаем изображение из URL (если оно еще не загружено)
-            if let imageURL = URL(string: photo.largeImageURL) {
-                UIBlockingProgressHUD.show()
-                KingfisherManager.shared.retrieveImage(with: imageURL) { result in
-                    UIBlockingProgressHUD.dismiss()
-                    switch result {
-                    case .success(let value):
-                        // Передаем загруженное изображение на главном потоке
-                        DispatchQueue.main.async {
-                            viewController.image = value.image
-                        }
-                    case .failure(let error):
-                        print("Failed to load image: \(error.localizedDescription)")
-                    }
-                }
-            }
+            // Загружаем изображение
+            loadImage(for: photo, at: indexPath, in: viewController)
         } else {
             super.prepare(for: segue, sender: sender)
         }
+    }
+
+    // Функция для загрузки изображения
+    private func loadImage(for photo: Photo, at indexPath: IndexPath, in viewController: SingleImageViewController) {
+        if let imageURL = URL(string: photo.largeImageURL) {
+            UIBlockingProgressHUD.show()
+            KingfisherManager.shared.retrieveImage(with: imageURL) { [weak self] result in
+                UIBlockingProgressHUD.dismiss()
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let value):
+                    // Передаем загруженное изображение на главном потоке
+                    DispatchQueue.main.async {
+                        viewController.image = value.image
+                    }
+                case .failure(let error):
+                    print("Failed to load image: \(error.localizedDescription)")
+                    // Показываем алерт об ошибке
+                    DispatchQueue.main.async {
+                        self.showError(for: photo, at: indexPath, in: viewController)
+                    }
+                }
+            }
+        }
+    }
+
+    // Функция для показа алерта об ошибке
+    private func showError(for photo: Photo, at indexPath: IndexPath, in viewController: SingleImageViewController) {
+        
+        AlertPresenter.showAlert(
+            title: "Что-то пошло не так",
+            message: "Попробовать еще раз?",
+            buttonText: "Ок",
+            on: self,
+            addYesNoButtons: true) { [weak self] in
+                self?.loadImage(for: photo, at: indexPath, in: viewController)
+            }
     }
     
     func updateTableViewAnimated() {
@@ -125,8 +148,10 @@ extension ImagesListViewController {
         let placeholder = UIImage(named: "placeholder")
         cell.cellImage.kf.indicatorType = .activity
         
+        UIBlockingProgressHUD.show()
         // Используем photoURL типа URL
         cell.cellImage.kf.setImage(with: photoURL, placeholder: placeholder) { result in
+            UIBlockingProgressHUD.dismiss()
             switch result {
             case .success(_):
                 cell.cellImage.kf.indicatorType = .none
@@ -197,7 +222,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
            // Уберём лоадер
            UIBlockingProgressHUD.dismiss()
            // Покажем, что что-то пошло не так
-           // TODO: Показать ошибку с использованием UIAlertController
+            AlertPresenter.showAlert(title: "что-то пошло не так", message: "произошла ошибка", on: self)
            }
         }
     }

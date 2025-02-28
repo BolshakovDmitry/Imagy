@@ -3,6 +3,8 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private var animationLayers = Set<CALayer>() // Множество для хранения слоев с анимациями
+    
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "placeholder.jpeg")
@@ -43,13 +45,13 @@ final class ProfileViewController: UIViewController {
     private lazy var shareButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(systemName: "ipad.and.arrow.forward")!, target: self, action: nil)
         button.tintColor = UIColor(named: "YP Red")
+        button.addTarget(self, action: #selector(logout), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
-    private let storage = Storage()
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewDidLoad() {
@@ -68,44 +70,127 @@ final class ProfileViewController: UIViewController {
                 queue: .main,
                 using: { [weak self] _ in
                     guard let self else { return }
+                    self.removeGradientLayers() // Удаляем градиентные слои
                     self.updateAvatar()
                 })
+        
+        // Добавляем градиентные слои
+        addGradientLayer(to: avatarImageView, cornerRadius: 35)
+        addGradientLayer(to: nameLabel)
+        addGradientLayer(to: usernameLabel)
+        addGradientLayer(to: greetingLabel)
+        
         updateAvatar()
         
         if let profile = profileService.profile {
             updateProfileDetails(profile: profile)
         }
-        
     }
-            
-        private func updateAvatar() {
-            guard
-                let profileImageURL = ProfileImageService.shared.avatarUrl
-            else { return }
-            
-            if let url = URL(string: profileImageURL) {
-                KingfisherManager.shared.retrieveImage(with: url) { result in
-                    switch result {
-                    case .success(let imageResult):
-                        let imageSize = imageResult.image.size
-                        let cornerRadius = imageSize.width * 0.5 // 50% от ширины изображения
-                        
-                        let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
-                        DispatchQueue.main.async {
-                            self.avatarImageView.kf.setImage(
-                                with: url,
-                                options: [.processor(processor)]
-                            )
-                        }
-                    case .failure(let error):
-                        print("Ошибка загрузки изображения: \(error.localizedDescription)")
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateGradientLayersFrame() // Обновляем размеры градиентных слоев
+    }
+    
+    private func addGradientLayer(to view: UIView, cornerRadius: CGFloat? = nil) {
+        let gradient = CAGradientLayer()
+        gradient.frame = CGRect(origin: .zero, size: CGSize(width: 70, height: 70))
+        gradient.locations = [0, 0.1, 0.3]
+        gradient.colors = [
+            UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
+            UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
+            UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
+        ]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        
+        if let cornerRadius = cornerRadius {
+            gradient.cornerRadius = cornerRadius
+        }
+        
+        gradient.masksToBounds = true
+        
+        // Добавляем анимацию
+        let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+        gradientChangeAnimation.duration = 1.0
+        gradientChangeAnimation.repeatCount = .infinity
+        gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
+        gradientChangeAnimation.toValue = [0, 0.8, 1]
+        gradient.add(gradientChangeAnimation, forKey: "locationsChange")
+        
+        view.layer.addSublayer(gradient)
+        animationLayers.insert(gradient) // Добавляем слой в множество
+    }
+    
+    private func removeGradientLayers() {
+        for layer in animationLayers {
+            layer.removeFromSuperlayer()
+        }
+        animationLayers.removeAll()
+    }
+    
+    private func updateGradientLayersFrame() {
+        for layer in animationLayers {
+            if let gradientLayer = layer as? CAGradientLayer,
+               let superview = gradientLayer.superlayer?.delegate as? UIView {
+                gradientLayer.frame = superview.bounds // Обновляем размеры градиента
+            }
+        }
+    }
+    
+    @objc func logout() {
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            ProfileLogoutService.shared.logout()
+            self.switchToSplashViewController()
+        }
+        yesAction.accessibilityIdentifier = "logout_yes"
+        
+        let noAction = UIAlertAction(title: "Нет", style: .cancel) { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func switchToSplashViewController() {
+        let splashViewController = SplashViewController()
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = splashViewController
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarUrl
+        else { return }
+        
+        if let url = URL(string: profileImageURL) {
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                case .success(let imageResult):
+                    let imageSize = imageResult.image.size
+                    let cornerRadius = imageSize.width * 0.5 // 50% от ширины изображения
+                    
+                    let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
+                    DispatchQueue.main.async {
+                        self.avatarImageView.kf.setImage(
+                            with: url,
+                            options: [.processor(processor)]
+                        )
+                        self.removeGradientLayers() // Удаляем градиентные слои после загрузки изображения
                     }
+                case .failure(let error):
+                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
                 }
             }
         }
+    }
     
-    
-    private func updateProfileDetails(profile: Profile){
+    private func updateProfileDetails(profile: Profile) {
         self.nameLabel.text = profile.name
         self.usernameLabel.text = profile.loginName
         self.greetingLabel.text = profile.bio

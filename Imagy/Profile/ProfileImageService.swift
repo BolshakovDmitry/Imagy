@@ -1,10 +1,11 @@
 import Foundation
+import UIKit
+
 
 final class ProfileImageService{
     
     static let shared = ProfileImageService()
     private init(){}
-    
     
     private(set) var avatarUrl: String?
     private let networkClient = NetworkClient()
@@ -32,6 +33,10 @@ final class ProfileImageService{
         )
     }
     
+    func clean() {
+        avatarUrl = nil
+       }
+    
     private func makeRequestWithToken(with token: String) -> URLRequest? {
         guard let baseURL = URL(string: Constants.profileURLString) else {
             return nil
@@ -40,13 +45,17 @@ final class ProfileImageService{
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-//        print("URL: \(request.url?.absoluteString ?? "failed to build URL from makeRequestWithToken method in ProfileImageService")")
-//        if let headers = request.allHTTPHeaderFields {
-//            print("Headers: \(headers)")
-//        } else {
-//            print("No headers found")
-//        }
+        print("URL: \(request.url?.absoluteString ?? "failed to build URL from makeRequestWithToken method in ProfileImageService")")
+        if let headers = request.allHTTPHeaderFields {
+            print("Headers: \(headers)")
+        } else {
+            print("No headers found")
+        }
         
         return request
     }
-}
+     
+
+    }
+    
+

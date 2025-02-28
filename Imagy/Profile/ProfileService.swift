@@ -38,6 +38,9 @@ final class ProfileService {
             }
         }
     }
+    func cleanProfile(){
+        profile = nil
+    }
     
     private func makeRequestWithToken(with token: String) -> URLRequest? {
         guard let baseURL = URL(string: Constants.profileURLString) else { return nil }

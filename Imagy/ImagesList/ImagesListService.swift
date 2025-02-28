@@ -56,6 +56,13 @@ final class ImagesListService {
         }
     }
     
+    func clean() {
+        photos.removeAll()
+        lastLoadePage = 0
+        //task = nil
+        //likeTask = nil
+    }
+    
     private func makeRequestWithToken(with token: String, with nextPage: String, with perPage: String) -> URLRequest? {
         guard var components = URLComponents(string: Constants.photosURL) else { return nil }
         
