@@ -28,7 +28,6 @@ final class SplashViewController: UIViewController {
             guard let token = storage.token else { return }
             fetchProfile(token: token)
             fetchProfileImage(token: token)
-            imagesListService.fetchPhotosNextPage(token: token)
         } else {
             presentAuthenticationScreen()
         }
@@ -89,6 +88,7 @@ final class SplashViewController: UIViewController {
                 switch result {
                     
                 case .success(_):
+                    self.imagesListService.fetchPhotosNextPage(token: token)
                     self.switchToTabBarController()
                     
                 case .failure(let error):

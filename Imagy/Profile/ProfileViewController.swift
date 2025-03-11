@@ -138,14 +138,14 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    @objc func logout() {
+    @objc private func logout() {
         let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
             guard let self = self else { return }
             ProfileLogoutService.shared.logout()
             self.switchToSplashViewController()
         }
-        yesAction.accessibilityIdentifier = "logout_yes"
+        yesAction.accessibilityIdentifier = AccessibilityConstans.yesActionAccessibilityIdentifier
         
         let noAction = UIAlertAction(title: "Нет", style: .cancel) { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)
@@ -191,9 +191,9 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateProfileDetails(profile: Profile) {
-        self.nameLabel.text = profile.name
-        self.usernameLabel.text = profile.loginName
-        self.greetingLabel.text = profile.bio
+        nameLabel.text = profile.name
+        usernameLabel.text = profile.loginName
+        greetingLabel.text = profile.bio
     }
     
     private func setupViews() {

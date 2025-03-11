@@ -20,12 +20,12 @@ struct PhotoResult: Codable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case width = "width"
-        case height = "height"
-        case createdAt = "created_at"
-        case welcomeDescription = "description"
-        case isLiked = "liked_by_user"
-        case urls = "urls"
+       case id
+       case width
+       case height
+       case createdAt = "created_at"
+       case welcomeDescription = "description"
+       case isLiked = "liked_by_user"
+       case urls
     }
 }

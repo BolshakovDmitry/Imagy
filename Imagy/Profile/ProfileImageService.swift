@@ -1,6 +1,4 @@
 import Foundation
-import UIKit
-
 
 final class ProfileImageService{
     
@@ -35,7 +33,7 @@ final class ProfileImageService{
     
     func clean() {
         avatarUrl = nil
-       }
+    }
     
     private func makeRequestWithToken(with token: String) -> URLRequest? {
         guard let baseURL = URL(string: Constants.profileURLString) else {
@@ -51,11 +49,6 @@ final class ProfileImageService{
         } else {
             print("No headers found")
         }
-        
         return request
     }
-     
-
-    }
-    
-
+}

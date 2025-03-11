@@ -39,6 +39,8 @@ final class NetworkClient{
             lastCode = code
         }
         
+        guard task == nil else { return }
+        
         let task = URLSession.shared.dataTask(with: urlrequest) { [weak self] data, response, error in
             
             

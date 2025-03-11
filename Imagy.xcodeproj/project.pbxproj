@@ -27,7 +27,6 @@
 		B293E4A92D637F2000F3A261 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293E4A82D637F2000F3A261 /* ImagesListService.swift */; };
 		B293E4AB2D637F3E00F3A261 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293E4AA2D637F3E00F3A261 /* Photo.swift */; };
 		B293E4AD2D638B3B00F3A261 /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293E4AC2D638B3B00F3A261 /* PhotoResult.swift */; };
-		B293E4AF2D68B1DD00F3A261 /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293E4AE2D68B1DD00F3A261 /* Gradient.swift */; };
 		B293E4B12D68D48D00F3A261 /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293E4B02D68D48D00F3A261 /* ProfileLogoutService.swift */; };
 		B296D2392D19AD3E00880E1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D2382D19AD3E00880E1D /* AppDelegate.swift */; };
 		B296D23B2D19AD3E00880E1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B296D23A2D19AD3E00880E1D /* SceneDelegate.swift */; };
@@ -46,6 +45,7 @@
 		B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915B2D428A6300DF4430 /* Storage.swift */; };
 		B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915E2D43B73700DF4430 /* SplashViewController.swift */; };
 		B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */; };
+		F49058812D806FE00038B610 /* AccessibilityConstans.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49058802D806FC40038B610 /* AccessibilityConstans.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,6 @@
 		B293E4A82D637F2000F3A261 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		B293E4AA2D637F3E00F3A261 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		B293E4AC2D638B3B00F3A261 /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
-		B293E4AE2D68B1DD00F3A261 /* Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		B293E4B02D68D48D00F3A261 /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		B296D2352D19AD3E00880E1D /* Imagy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imagy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B296D2382D19AD3E00880E1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		B2C8915B2D428A6300DF4430 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		B2C8915E2D43B73700DF4430 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegate.swift; sourceTree = "<group>"; };
+		F49058802D806FC40038B610 /* AccessibilityConstans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstans.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +205,6 @@
 				B296D27C2D19B96C00880E1D /* Date+Extensions.swift */,
 				B2901AEC2D5412AF00AD6B0A /* ErrorLogger.swift */,
 				B293E4A42D5E181500F3A261 /* ErrorCode.swift */,
-				B293E4AE2D68B1DD00F3A261 /* Gradient.swift */,
 			);
 			path = "Helpers+Extensions";
 			sourceTree = "<group>";
@@ -289,6 +288,7 @@
 		B2C891622D4901D900DF4430 /* Constans */ = {
 			isa = PBXGroup;
 			children = (
+				F49058802D806FC40038B610 /* AccessibilityConstans.swift */,
 				B2C891442D3E7BBA00DF4430 /* Constans.swift */,
 			);
 			path = Constans;
@@ -363,7 +363,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					B296D2342D19AD3E00880E1D = {
 						CreatedOnToolsVersion = 15.2;
@@ -447,6 +447,7 @@
 				B2901AE12D50E29F00AD6B0A /* UIBlockingProgressHUD.swift in Sources */,
 				B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */,
 				B2C8914A2D3EA13D00DF4430 /* AuthViewController.swift in Sources */,
+				F49058812D806FE00038B610 /* AccessibilityConstans.swift in Sources */,
 				B2C891452D3E7BBA00DF4430 /* Constans.swift in Sources */,
 				B2901AE92D5240FD00AD6B0A /* ProfileImageService.swift in Sources */,
 				B2901AEB2D52417800AD6B0A /* UserImage.swift in Sources */,
@@ -459,7 +460,6 @@
 				B26497942D2ED1A80005F8DF /* ProfileViewController.swift in Sources */,
 				B296D27F2D19B96C00880E1D /* Date+Extensions.swift in Sources */,
 				B26497962D2EE02B0005F8DF /* SingleImageViewController.swift in Sources */,
-				B293E4AF2D68B1DD00F3A261 /* Gradient.swift in Sources */,
 				B2C891542D42374400DF4430 /* NetworkClient.swift in Sources */,
 				B2C8914F2D3FC28100DF4430 /* WebViewControllerDelegate.swift in Sources */,
 				B293E4AB2D637F3E00F3A261 /* Photo.swift in Sources */,
@@ -698,7 +698,6 @@
 		B296D2632D19AD4000880E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -717,7 +716,6 @@
 		B296D2642D19AD4000880E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -736,7 +734,6 @@
 		B296D2662D19AD4000880E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -753,7 +750,6 @@
 		B296D2672D19AD4000880E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

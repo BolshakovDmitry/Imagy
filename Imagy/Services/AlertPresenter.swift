@@ -1,16 +1,6 @@
 import UIKit
 
 final class AlertPresenter {
-    
-    /// Показывает алерт с заданными параметрами.
-    ///
-    /// - Parameters:
-    ///   - title: Заголовок алерта.
-    ///   - message: Сообщение алерта.
-    ///   - buttonText: Текст для кнопки по умолчанию (по умолчанию "Ок").
-    ///   - viewController: Контроллер, на котором будет показан алерт.
-    ///   - addYesNoButtons: Если `true`, добавляет кнопки "Да" и "Нет".
-    ///   - completion: Замыкание, которое выполняется при нажатии на кнопку по умолчанию.
     static func showAlert(
         title: String,
         message: String,

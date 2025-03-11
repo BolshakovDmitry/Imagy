@@ -6,13 +6,16 @@ final class ImagesListService {
     
     var photos: [Photo] = []
     static let ImagesListServiceDidChange = Notification.Name(rawValue: "ImagesListServiceDidChange")
-    private var lastLoadePage = 0
+    private var lastLoadedPage = 0
     private var networkClient = NetworkClient()
     private var storage = Storage()
-
     
     func fetchPhotosNextPage(token: String) {
-        let nextPage = lastLoadePage + 1
+        
+        DispatchQueue.main.async {
+            UIBlockingProgressHUD.show()
+        }
+        let nextPage = lastLoadedPage + 1
         
         // Создаем запрос
         guard let request = makeRequestWithToken(with: token, with: String(nextPage), with: Constants.numberOfPicturesPerPage) else {
@@ -22,10 +25,13 @@ final class ImagesListService {
         
         // Выполняем запрос
         networkClient.fetch([PhotoResult].self, urlrequest: request) { [weak self] result in
+            // Разворачиваем self
+            guard let self = self else { return }
+            
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
-                    // Преобразуем массив PhotoResult в массив Photo
+                    UIBlockingProgressHUD.dismiss()
                     let newPhotos = data.map { photoResult in
                         Photo(
                             id: photoResult.id,
@@ -39,8 +45,8 @@ final class ImagesListService {
                     }
                     
                     // Обновляем данные
-                    self?.photos.append(contentsOf: newPhotos)
-                    self?.lastLoadePage = nextPage
+                    self.photos.append(contentsOf: newPhotos)
+                    self.lastLoadedPage = nextPage
                     
                     // Отправляем уведомление
                     NotificationCenter.default.post(
@@ -50,7 +56,6 @@ final class ImagesListService {
                 }
                 
             case .failure(let error):
-                // Логируем ошибку
                 error.log(serviceName: "ImagesListService", error: error, additionalInfo: error.localizedDescription)
             }
         }
@@ -58,9 +63,7 @@ final class ImagesListService {
     
     func clean() {
         photos.removeAll()
-        lastLoadePage = 0
-        //task = nil
-        //likeTask = nil
+        lastLoadedPage = 0
     }
     
     private func makeRequestWithToken(with token: String, with nextPage: String, with perPage: String) -> URLRequest? {
@@ -81,13 +84,6 @@ final class ImagesListService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-//        print("URL: \(request.url?.absoluteString ?? "failed to build URL from makeRequestWithToken method in ImagesListService")")
-//        if let headers = request.allHTTPHeaderFields {
-//            print("Headers: \(headers)")
-//        } else {
-//            print("No headers found")
-//        }
-        
         return request
     }
 }
@@ -96,36 +92,56 @@ struct EmptyResponse: Decodable {} // Пустой структурный тип
 
 extension ImagesListService {
     
-    
+    enum ImagesListServiceError: Error {
+        case invalidToken
+        case invalidRequest
+        case searchPhotoError
+    }
     
     func changeLike(photoID: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
         assert(Thread.isMainThread, "This code must be executed on the main thread")
         
         guard let token = storage.token else {
+            completion(.failure(ImagesListServiceError.invalidToken))
             return
         }
-        guard let request = makeLikeRequestWithToken(with: token, for: photoID, set: isLike) else { return }
         
+        // Создаем запрос
+        guard let request = makeLikeRequestWithToken(with: token, for: photoID, set: isLike) else {
+            completion(.failure(ImagesListServiceError.invalidRequest))
+            return
+        }
         
         // Выполняем запрос
         networkClient.fetch(EmptyResponse.self, urlrequest: request) { [weak self] result in
+            // Разворачиваем self
+            guard let self = self else { return }
+            
             switch result {
-            case .success(_):
-                guard let index = self?.photos.firstIndex(where: { $0.id == photoID }) else {
+            case .success:
+                // Ищем индекс фотографии по ID
+                guard let index = self.photos.firstIndex(where: { $0.id == photoID }) else {
+                    completion(.failure(ImagesListServiceError.searchPhotoError))
                     return
                 }
-                guard let oldPhoto = self?.photos[index] else { return }
-                guard let newPhoto = self?.invertLike(in: oldPhoto) else { return }
-                self?.photos[index] = newPhoto
                 
+                // Получаем старую фотографию и инвертируем лайк
+                let oldPhoto = self.photos[index]
+                let newPhoto = self.invertLike(in: oldPhoto)
+                
+                // Обновляем фотографию в массиве
+                self.photos[index] = newPhoto
+                
+                // Вызываем completion
                 completion(.success(Void()))
                 
             case .failure(let error):
+                // Обрабатываем ошибку
                 completion(.failure(error))
             }
         }
     }
-        
+    
     private func makeLikeRequestWithToken(with token: String, for photoID: String, set isLike: Bool) -> URLRequest? {
         // Создаем базовый URL из Constants.photosURL
         guard var components = URLComponents(string: Constants.photosURL) else { return nil }
@@ -152,7 +168,7 @@ extension ImagesListService {
     }
     
     private func invertLike(in photo: Photo) -> Photo {
-        return Photo (
+        Photo (
             id: photo.id,
             size: photo.size,
             createdAt: photo.createdAt,
