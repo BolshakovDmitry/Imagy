@@ -21,6 +21,8 @@ final class SplashViewController: UIViewController {
          .lightContent
      }
     
+    // MARK: - определение на какой поток идти(аутентификации или фото с профилем)
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -52,6 +54,8 @@ final class SplashViewController: UIViewController {
         
     }
     
+    // MARK: - страница аутентификации
+    
     private func presentAuthenticationScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         guard let authVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController else {
@@ -63,6 +67,8 @@ final class SplashViewController: UIViewController {
         authVC.delegate = self
         present(authVC, animated: true)
     }
+    
+    // MARK: - экран таба с фото и профилем
     
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
@@ -76,6 +82,8 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tabBarController
     }
     
+    // MARK: - запрос инфы для профиля и фото профиля
+    
     private func fetchProfile(token: String) {
         DispatchQueue.main.async {
             UIBlockingProgressHUD.show()
@@ -86,10 +94,9 @@ final class SplashViewController: UIViewController {
                 UIBlockingProgressHUD.dismiss()
                 guard let self = self else { return }
                 switch result {
-                    
                 case .success(_):
-                    self.imagesListService.fetchPhotosNextPage(token: token)
-                    self.switchToTabBarController()
+                    self.imagesListService.fetchPhotosNextPage(token: token) // если успешно - начинаем загрузку фоток
+                    self.switchToTabBarController() // переключаемся на таб
                     
                 case .failure(let error):
                     var statusC: String?
@@ -112,6 +119,8 @@ final class SplashViewController: UIViewController {
         profileImageService.fetchProfileImageURL(token: token)
     }
 }
+
+// MARK: - экстншн для первого входа
 
 extension SplashViewController: AuthViewControllerDelegate {
     func didAuthenticate(_ vc: AuthViewController) {

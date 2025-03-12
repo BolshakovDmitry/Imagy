@@ -23,7 +23,7 @@ final class AlertPresenter {
             alert.addAction(defaultAction)
         }
         
-        // Добавляем кнопки "Да" и "Нет", если требуется
+        // Добавляем кнопки "Повторить" и "Не надо", если требуется
         if addYesNoButtons {
             let yesAction = UIAlertAction(title: "Повторить", style: .default) { _ in
                 completion?()

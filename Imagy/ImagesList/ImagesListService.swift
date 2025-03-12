@@ -10,6 +10,8 @@ final class ImagesListService {
     private var networkClient = NetworkClient()
     private var storage = Storage.shared
     
+    // MARK: - запрос фото
+    
     func fetchPhotosNextPage(token: String) {
         
         DispatchQueue.main.async {
@@ -61,11 +63,6 @@ final class ImagesListService {
         }
     }
     
-    func clean() {
-        photos.removeAll()
-        lastLoadedPage = 0
-    }
-    
     private func makeRequestWithToken(with token: String, with nextPage: String, with perPage: String) -> URLRequest? {
         guard var components = URLComponents(string: Constants.photosURL) else { return nil }
         
@@ -86,7 +83,16 @@ final class ImagesListService {
         
         return request
     }
+    
+    // MARK: - очистка в случае выхода из профиля
+    
+    func clean() {
+        photos.removeAll()
+        lastLoadedPage = 0
+    }
 }
+
+// MARK: - функционал лайков
 
 struct EmptyResponse: Decodable {} // Пустой структурный тип для пустых ответов
 

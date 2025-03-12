@@ -187,8 +187,8 @@
 				B26497922D2ED1750005F8DF /* Profile */,
 				B296D2902D1A2FAE00880E1D /* ImagesList */,
 				B296D2382D19AD3E00880E1D /* AppDelegate.swift */,
-				B293A0BA2D1A665D00239E92 /* Main.storyboard */,
 				B296D23A2D19AD3E00880E1D /* SceneDelegate.swift */,
+				B293A0BA2D1A665D00239E92 /* Main.storyboard */,
 				B296D2432D19AD4000880E1D /* LaunchScreen.storyboard */,
 				B264978F2D1EE2D20005F8DF /* Assets.xcassets */,
 				B296D2792D19B96C00880E1D /* Helpers+Extensions */,
@@ -248,9 +248,9 @@
 		B2C891502D410D4F00DF4430 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B2C891532D42374400DF4430 /* NetworkClient.swift */,
 				B293E4B02D68D48D00F3A261 /* ProfileLogoutService.swift */,
 				B2C891512D410D7000DF4430 /* OAuth2Service.swift */,
-				B2C891532D42374400DF4430 /* NetworkClient.swift */,
 				B2901AEE2D54165F00AD6B0A /* AlertPresenter.swift */,
 			);
 			path = Services;

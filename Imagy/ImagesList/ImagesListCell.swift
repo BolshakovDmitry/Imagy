@@ -7,10 +7,7 @@ protocol ImagesListCellDelegate: AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     
-    // MARK: - Static properties
     static let reuseIdentifier = "ImagesListCell"
-    
-    // MARK: - Properties
     private var animationLayers = Set<CALayer>()
     weak var delegate: ImagesListCellDelegate?
     
@@ -77,11 +74,11 @@ final class ImagesListCell: UITableViewCell {
             }
         }
         
-        
         dateLabel.text = date
         setIsLiked(isLiked)
     }
     
+    // MARK: - анимации
     
     private func setupGradientAnimation() {
         cellImage.layer.cornerRadius = 16

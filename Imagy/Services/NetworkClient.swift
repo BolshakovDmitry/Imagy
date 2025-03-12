@@ -1,4 +1,3 @@
-
 import Foundation
 
 enum NetworkError: Error {
@@ -39,7 +38,7 @@ final class NetworkClient{
             lastCode = code
         }
         
-        guard task == nil else { return }
+        guard task == nil else { return } // если уже выполняется запрос - то выходим
         
         let task = URLSession.shared.dataTask(with: urlrequest) { [weak self] data, response, error in
             
