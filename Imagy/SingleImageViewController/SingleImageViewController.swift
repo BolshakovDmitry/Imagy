@@ -16,6 +16,7 @@ final class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showLoadingSpinner()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         
@@ -24,6 +25,17 @@ final class SingleImageViewController: UIViewController {
         imageView.frame.size = image.size
         rescaleAndCenterImageInScrollView(image: image)
     }
+    
+    func showLoadingSpinner() {
+       DispatchQueue.main.async {
+           UIBlockingProgressHUD.show()
+       }
+   }
+    func hideLoadingSpinner() {
+       DispatchQueue.main.async {
+           UIBlockingProgressHUD.dismiss()
+       }
+   }
     
     @IBAction private func didTapBackButton() {
         dismiss(animated: true, completion: nil)

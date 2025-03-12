@@ -7,7 +7,7 @@ final class OAuth2Service{
     private init(){}
     
     private let networkClient = NetworkClient()
-    private let storage = Storage()
+    private let storage = Storage.shared
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?

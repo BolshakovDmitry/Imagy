@@ -1,0 +1,38 @@
+networkClient.fetch([PhotoResult].self, urlrequest: request) { [weak self] result in
+    // Разворачиваем self
+    guard let self = self else { return }
+    
+    switch result {
+    case .success(let data):
+        DispatchQueue.main.async {
+            UIBlockingProgressHUD.dismiss()
+            
+            // Преобразуем массив PhotoResult в массив Photo
+            let newPhotos = data.map { photoResult in
+                Photo(
+                    id: photoResult.id,
+                    size: CGSize(width: photoResult.width, height: photoResult.height),
+                    createdAt: photoResult.createdAt,
+                    welcomeDescription: photoResult.welcomeDescription,
+                    thumbImageURL: photoResult.urls.thumbImageURL,
+                    largeImageURL: photoResult.urls.largeImageURL,
+                    isLiked: photoResult.isLiked
+                )
+            }
+            
+            // Обновляем данные
+            self.photos.append(contentsOf: newPhotos)
+            self.lastLoadedPage = nextPage
+            
+            // Отправляем уведомление
+            NotificationCenter.default.post(
+                name: ImagesListService.ImagesListServiceDidChange,
+                object: self
+            )
+        }
+        
+    case .failure(let error):
+        // Логируем ошибку
+        error.log(serviceName: "ImagesListService", error: error, additionalInfo: error.localizedDescription)
+    }
+}

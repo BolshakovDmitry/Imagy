@@ -8,7 +8,7 @@ final class ProfileService {
     private(set) var profile: Profile?
     
     private let networkClient = NetworkClient()
-    private let storage = Storage()
+    private let storage = Storage.shared
     
     enum AuthServiceError: Error {
         case invalidRequest
@@ -38,6 +38,9 @@ final class ProfileService {
             }
         }
     }
+    func cleanProfile(){
+        profile = nil
+    }
     
     private func makeRequestWithToken(with token: String) -> URLRequest? {
         guard let baseURL = URL(string: Constants.profileURLString) else { return nil }
@@ -46,7 +49,7 @@ final class ProfileService {
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
-        logRequest(request: request)
+       // logRequest(request: request)
         
         return request
     }

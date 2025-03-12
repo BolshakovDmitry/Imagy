@@ -1,12 +1,12 @@
 import UIKit
 
 final class AlertPresenter {
-    
     static func showAlert(
         title: String,
         message: String,
         buttonText: String = "Ок",
         on viewController: UIViewController,
+        addYesNoButtons: Bool = false,
         completion: (() -> Void)? = nil
     ) {
         let alert = UIAlertController(
@@ -15,11 +15,27 @@ final class AlertPresenter {
             preferredStyle: .alert
         )
         
-        let action = UIAlertAction(title: buttonText, style: .default) { _ in
-            completion?()
+        if !addYesNoButtons {
+            // Добавляем кнопку по умолчанию
+            let defaultAction = UIAlertAction(title: buttonText, style: .default) { _ in
+                completion?()
+            }
+            alert.addAction(defaultAction)
         }
         
-        alert.addAction(action)
+        // Добавляем кнопки "Повторить" и "Не надо", если требуется
+        if addYesNoButtons {
+            let yesAction = UIAlertAction(title: "Повторить", style: .default) { _ in
+                completion?()
+            }
+            alert.addAction(yesAction)
+            
+            let noAction = UIAlertAction(title: "Не надо", style: .cancel) { _ in
+                viewController.dismiss(animated: true, completion: nil)
+                
+            }
+            alert.addAction(noAction)
+        }
         
         // Показываем алерт на переданном контроллере
         viewController.present(alert, animated: true, completion: nil)

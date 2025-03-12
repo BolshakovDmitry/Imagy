@@ -1,4 +1,3 @@
-
 import Foundation
 
 enum NetworkError: Error {
@@ -39,6 +38,8 @@ final class NetworkClient{
             lastCode = code
         }
         
+        guard task == nil else { return } // если уже выполняется запрос - то выходим
+        
         let task = URLSession.shared.dataTask(with: urlrequest) { [weak self] data, response, error in
             
             
@@ -67,7 +68,9 @@ final class NetworkClient{
                 return
             }
             do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601 // Указываем формат даты
+                let decodedData = try decoder.decode(T.self, from: data)
                 handler(.success(decodedData))
             } catch {
                 let error = NetworkError.decodeError

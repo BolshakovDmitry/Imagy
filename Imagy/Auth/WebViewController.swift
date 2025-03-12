@@ -1,6 +1,6 @@
 import UIKit
 import ProgressHUD
-import WebKit
+@preconcurrency import WebKit
 
 final class WebViewController: UIViewController {
     
@@ -72,7 +72,9 @@ extension WebViewController: WKNavigationDelegate {
     ) {
         if let code = code(from: navigationAction) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
-            UIBlockingProgressHUD.show()
+            DispatchQueue.main.async {
+                UIBlockingProgressHUD.show()
+            }
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

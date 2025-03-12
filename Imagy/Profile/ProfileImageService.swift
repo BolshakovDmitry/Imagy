@@ -5,7 +5,6 @@ final class ProfileImageService{
     static let shared = ProfileImageService()
     private init(){}
     
-    
     private(set) var avatarUrl: String?
     private let networkClient = NetworkClient()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
@@ -32,6 +31,10 @@ final class ProfileImageService{
         )
     }
     
+    func clean() {
+        avatarUrl = nil
+    }
+    
     private func makeRequestWithToken(with token: String) -> URLRequest? {
         guard let baseURL = URL(string: Constants.profileURLString) else {
             return nil
@@ -46,7 +49,6 @@ final class ProfileImageService{
         } else {
             print("No headers found")
         }
-        
         return request
     }
 }
