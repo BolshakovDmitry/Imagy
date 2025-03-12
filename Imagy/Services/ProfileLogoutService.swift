@@ -4,7 +4,7 @@ import WebKit
 
 final class ProfileLogoutService {
    static let shared = ProfileLogoutService()
-    private let storage = Storage()
+    private let storage = Storage.shared
   
    private init() { }
 

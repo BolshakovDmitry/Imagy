@@ -1,4 +1,3 @@
-
 import UIKit
 import ProgressHUD
 
@@ -16,5 +15,4 @@ final class UIBlockingProgressHUD {
         window?.isUserInteractionEnabled = true
         ProgressHUD.dismiss()
     }
-
 }

@@ -8,7 +8,7 @@ final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     private let currentDate = Date()
     private let imagesListService = ImagesListService.shared
-    private let storage = Storage()
+    private let storage = Storage.shared
     var photos: [Photo] = []
     private var imageListServiceObserver: NSObjectProtocol?
     

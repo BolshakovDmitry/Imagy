@@ -3,6 +3,9 @@ import SwiftKeychainWrapper
 
 final class Storage {
     
+    static let shared = Storage()
+    private init(){}
+    
     enum Keys: String {
         case authToken = "Auth token"
     }

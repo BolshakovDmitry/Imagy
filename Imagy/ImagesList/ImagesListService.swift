@@ -8,7 +8,7 @@ final class ImagesListService {
     static let ImagesListServiceDidChange = Notification.Name(rawValue: "ImagesListServiceDidChange")
     private var lastLoadedPage = 0
     private var networkClient = NetworkClient()
-    private var storage = Storage()
+    private var storage = Storage.shared
     
     func fetchPhotosNextPage(token: String) {
         
@@ -112,31 +112,24 @@ extension ImagesListService {
             return
         }
         
-        // Выполняем запрос
+        
         networkClient.fetch(EmptyResponse.self, urlrequest: request) { [weak self] result in
-            // Разворачиваем self
             guard let self = self else { return }
-            
             switch result {
             case .success:
-                // Ищем индекс фотографии по ID
                 guard let index = self.photos.firstIndex(where: { $0.id == photoID }) else {
                     completion(.failure(ImagesListServiceError.searchPhotoError))
                     return
                 }
-                
                 // Получаем старую фотографию и инвертируем лайк
                 let oldPhoto = self.photos[index]
                 let newPhoto = self.invertLike(in: oldPhoto)
                 
                 // Обновляем фотографию в массиве
                 self.photos[index] = newPhoto
-                
-                // Вызываем completion
                 completion(.success(Void()))
                 
             case .failure(let error):
-                // Обрабатываем ошибку
                 completion(.failure(error))
             }
         }
@@ -154,8 +147,6 @@ extension ImagesListService {
             print("Failed to create URL from components")
             return nil
         }
-        
-        // Создаем запрос
         var request = URLRequest(url: url)
         
         // Устанавливаем метод HTTP (POST для лайка, DELETE для дизлайка)

@@ -8,7 +8,7 @@ final class ProfileService {
     private(set) var profile: Profile?
     
     private let networkClient = NetworkClient()
-    private let storage = Storage()
+    private let storage = Storage.shared
     
     enum AuthServiceError: Error {
         case invalidRequest

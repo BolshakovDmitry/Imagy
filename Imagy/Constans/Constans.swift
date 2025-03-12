@@ -9,11 +9,11 @@ enum Constants {
     static let photosURL = "https://api.unsplash.com/photos"
     static let numberOfPicturesPerPage = "10"
     static let defaultBaseURL: URL = {
-         guard let url = URL(string: "https://api.unsplash.com") else {
-             assertionFailure("Invalid base URL")
-             return URL(string: "https://api.unsplash.com")! // Возвращаем дефолтный URL, даже если он некорректен
-         }
-         return url
-     }()
+        guard let url = URL(string: "https://api.unsplash.com") else {
+            assertionFailure("Invalid base URL")
+            return URL(string: "https://api.unsplash.com")! // Возвращаем дефолтный URL, даже если он некорректен
+        }
+        return url
+    }()
 }
 

@@ -2,7 +2,7 @@ import UIKit
 import SwiftKeychainWrapper
 
 final class SplashViewController: UIViewController {
-    private let storage = Storage()
+    private let storage = Storage.shared
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let imagesListService = ImagesListService.shared
