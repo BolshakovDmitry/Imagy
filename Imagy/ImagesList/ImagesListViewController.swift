@@ -2,18 +2,13 @@ import UIKit
 import Kingfisher
 
 final class ImagesListViewController: UIViewController {
-    
-    // MARK: - @IBOutlet properties
-    
+        
     @IBOutlet private var tableView: UITableView!
     private let currentDate = Date()
     private let imagesListService = ImagesListService.shared
     private let storage = Storage.shared
     var photos: [Photo] = []
     private var imageListServiceObserver: NSObjectProtocol?
-    
-    // MARK: - private properties
-    
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -30,16 +25,7 @@ final class ImagesListViewController: UIViewController {
         subscribeToPhotosUpdate()
     }
     
-    private func subscribeToPhotosUpdate() {
-        imageListServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ImagesListService.ImagesListServiceDidChange,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                self?.updateTableViewAnimated()
-            }
-    }
+    // MARK: - переход на страницу с увеличенным изображением
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowSingleImage" {
@@ -59,7 +45,6 @@ final class ImagesListViewController: UIViewController {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
     // Функция для загрузки изображения
     private func loadImage(for photo: Photo, at indexPath: IndexPath, in viewController: SingleImageViewController) {
         if let imageURL = URL(string: photo.largeImageURL) {
@@ -100,6 +85,20 @@ final class ImagesListViewController: UIViewController {
             }
     }
     
+    
+    // MARK: - подписка на обновление массива с фотками
+    
+    private func subscribeToPhotosUpdate() {
+        imageListServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.ImagesListServiceDidChange,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.updateTableViewAnimated()
+            }
+    }
+    
     func updateTableViewAnimated() {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
@@ -115,6 +114,8 @@ final class ImagesListViewController: UIViewController {
     }
     
 }
+
+// MARK: - таблица
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -151,7 +152,7 @@ extension ImagesListViewController {
         cell.cellImage.kf.indicatorType = .activity
         
         // Используем photoURL типа URL
-        cell.cellImage.kf.setImage(with: photoURL, placeholder: placeholder) { [weak self] result in
+        cell.cellImage.kf.setImage(with: photoURL, placeholder: placeholder) { result in
             //UIBlockingProgressHUD.dismiss()
             switch result {
             case .success(_):
@@ -170,8 +171,9 @@ extension ImagesListViewController {
         let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         cell.likeButton.setImage(likeImage, for: .normal)
     }
-    
 }
+
+// MARK: - переход на SingleImageVC и расчет высоты ячеек
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -190,6 +192,8 @@ extension ImagesListViewController: UITableViewDelegate {
         return cellHeight
     }
     
+    // MARK: - запрос след партии фото
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         print("WILL display ----- indexPath - ", indexPath.row+1, imagesListService.photos.count  )
         if indexPath.row + 1 == imagesListService.photos.count{
@@ -197,6 +201,8 @@ extension ImagesListViewController: UITableViewDelegate {
         }
     }
 }
+
+// MARK: - функционал отображения лайков
 
 extension ImagesListViewController: ImagesListCellDelegate {
     
@@ -232,5 +238,4 @@ extension ImagesListViewController: ImagesListCellDelegate {
             }
         }
     }
-    
 }

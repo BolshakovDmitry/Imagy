@@ -46,36 +46,13 @@ final class ImagesListCell: UITableViewCell {
     @IBAction private func likeButtonClicked() {
         delegate?.imageListCellDidTapLike(self)
     }
+
     
+    // MARK: - установка сердечка
 
     func setIsLiked(_ isLiked: Bool) {
         let likeImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         likeButton.setImage(likeImage, for: .normal)
-    }
-    
-    func configure(with imageURL: String, date: String, isLiked: Bool) {
-        
-        addGradientLayer(to: cellImage, cornerRadius: 16)
-        addGradientLayer(to: dateLabel)
-        
-        if let url = URL(string: imageURL) {
-            cellImage.kf.setImage(
-                with: url,
-                placeholder: UIImage(named: "placeholder.jpeg"),
-                options: [.transition(.fade(0.2))]
-            ) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success:
-                    self.removeGradientLayers()
-                case .failure(let error):
-                    print("Error loading image: \(error.localizedDescription)")
-                }
-            }
-        }
-        
-        dateLabel.text = date
-        setIsLiked(isLiked)
     }
     
     // MARK: - анимации
