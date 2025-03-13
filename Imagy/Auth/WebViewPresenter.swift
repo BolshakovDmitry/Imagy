@@ -8,59 +8,37 @@ public protocol WebViewPresenterProtocol {
 
 final class WebViewPresenter: WebViewPresenterProtocol {
     
-    weak var view: WebViewControllerProtocol?
+    var authHelper: AuthHelperProtocol
     
-    fileprivate enum WebViewConstants {
-        static let unsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    init(authHelper: AuthHelperProtocol) {
+        self.authHelper = authHelper
     }
     
+    weak var view: WebViewControllerProtocol?
+    
     func viewDidLoad() {
-        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthorizeURLString) else {
-            print("Failed to create base WEB-URL")
+        guard let request = authHelper.authRequest() else {
+            assertionFailure("Failed to construct authorization URLRequest")
             return
         }
         
-        let queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-        urlComponents.queryItems = queryItems
-        
-        guard let url = urlComponents.url else {
-            print("Failed to construct final URL")
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        
-        didUpdateProgressValue(0)
-
         view?.load(request: request)
+        didUpdateProgressValue(0)
     }
     
     func code(from url: URL) -> String? {
-        if let urlComponents = URLComponents(string: url.absoluteString),
-           urlComponents.path == "/oauth/authorize/native",
-           let items = urlComponents.queryItems,
-           let codeItem = items.first(where: { $0.name == "code" })
-        {
-            return codeItem.value
-        } else {
-            return nil
-        }
+        authHelper.code(from: url)
     }
     
     func didUpdateProgressValue(_ newValue: Double) {
-            let newProgressValue = Float(newValue)
-            view?.setProgressValue(newProgressValue)
-            
-            let shouldHideProgress = shouldHideProgress(for: newProgressValue)
-            view?.setProgressHidden(shouldHideProgress)
-        }
+        let newProgressValue = Float(newValue)
+        view?.setProgressValue(newProgressValue)
         
-        func shouldHideProgress(for value: Float) -> Bool {
-            abs(value - 1.0) <= 0.0001
-        }
+        let shouldHideProgress = shouldHideProgress(for: newProgressValue)
+        view?.setProgressHidden(shouldHideProgress)
+    }
+    
+    func shouldHideProgress(for value: Float) -> Bool {
+        abs(value - 1.0) <= 0.0001
+    }
 }
