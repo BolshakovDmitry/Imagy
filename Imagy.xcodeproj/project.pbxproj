@@ -45,6 +45,7 @@
 		B2C8915C2D428A6300DF4430 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915B2D428A6300DF4430 /* Storage.swift */; };
 		B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8915E2D43B73700DF4430 /* SplashViewController.swift */; };
 		B2C891612D450C2200DF4430 /* AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */; };
+		F456D3382D830C2700350599 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456D3372D830C2500350599 /* WebViewPresenter.swift */; };
 		F49058812D806FE00038B610 /* AccessibilityConstans.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49058802D806FC40038B610 /* AccessibilityConstans.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		B2C8915B2D428A6300DF4430 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		B2C8915E2D43B73700DF4430 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B2C891602D450C2200DF4430 /* AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegate.swift; sourceTree = "<group>"; };
+		F456D3372D830C2500350599 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F49058802D806FC40038B610 /* AccessibilityConstans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstans.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				B2C891492D3EA13D00DF4430 /* AuthViewController.swift */,
+				F456D3372D830C2500350599 /* WebViewPresenter.swift */,
 				B2C8914B2D3EA3EA00DF4430 /* WebViewController.swift */,
 			);
 			path = Auth;
@@ -443,6 +446,7 @@
 				B293E4B12D68D48D00F3A261 /* ProfileLogoutService.swift in Sources */,
 				B2901AED2D5412AF00AD6B0A /* ErrorLogger.swift in Sources */,
 				B2901AEF2D54165F00AD6B0A /* AlertPresenter.swift in Sources */,
+				F456D3382D830C2700350599 /* WebViewPresenter.swift in Sources */,
 				B2C891522D410D7000DF4430 /* OAuth2Service.swift in Sources */,
 				B2901AE12D50E29F00AD6B0A /* UIBlockingProgressHUD.swift in Sources */,
 				B2C8915F2D43B73700DF4430 /* SplashViewController.swift in Sources */,
