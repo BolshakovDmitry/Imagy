@@ -21,6 +21,7 @@ final class ProfileViewController: UIViewController {
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "nameLabel"
         return label
     }()
     
@@ -30,6 +31,7 @@ final class ProfileViewController: UIViewController {
         label.textColor = UIColor(named: "YP Grey")
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "usernameLabel"
         return label
     }()
     
@@ -42,11 +44,12 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private lazy var shareButton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(systemName: "ipad.and.arrow.forward")!, target: self, action: nil)
         button.tintColor = UIColor(named: "YP Red")
         button.addTarget(self, action: #selector(logout), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "logout button"
         return button
     }()
     
@@ -201,7 +204,7 @@ final class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(usernameLabel)
         view.addSubview(greetingLabel)
-        view.addSubview(shareButton)
+        view.addSubview(logoutButton)
     }
     
     private func setupConstraints() {
@@ -220,8 +223,8 @@ final class ProfileViewController: UIViewController {
             greetingLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8),
             greetingLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            shareButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            shareButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 0)
+            logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 0)
         ])
     }
 }

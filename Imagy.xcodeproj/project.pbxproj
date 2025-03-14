@@ -71,6 +71,13 @@
 			remoteGlobalIDString = B296D2342D19AD3E00880E1D;
 			remoteInfo = Imagy;
 		};
+		F456D3522D84306D00350599 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B296D22D2D19AD3E00880E1D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B296D2342D19AD3E00880E1D;
+			remoteInfo = Imagy;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -115,11 +122,13 @@
 		F456D3372D830C2500350599 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F456D3392D831F4500350599 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		F456D33F2D832CB300350599 /* ImagyTests1.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagyTests1.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F456D34C2D84306D00350599 /* ImagyTests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagyTests2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F49058802D806FC40038B610 /* AccessibilityConstans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityConstans.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F456D3402D832CB300350599 /* ImagyTests1 */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImagyTests1; sourceTree = "<group>"; };
+		F456D34D2D84306D00350599 /* ImagyTests2 */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImagyTests2; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +163,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F456D3492D84306D00350599 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -179,6 +195,7 @@
 			children = (
 				B296D2372D19AD3E00880E1D /* Imagy */,
 				F456D3402D832CB300350599 /* ImagyTests1 */,
+				F456D34D2D84306D00350599 /* ImagyTests2 */,
 				B296D2362D19AD3E00880E1D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -190,6 +207,7 @@
 				B296D24B2D19AD4000880E1D /* ImagyTests.xctest */,
 				B296D2552D19AD4000880E1D /* ImagyUITests.xctest */,
 				F456D33F2D832CB300350599 /* ImagyTests1.xctest */,
+				F456D34C2D84306D00350599 /* ImagyTests2.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -402,6 +420,29 @@
 			productReference = F456D33F2D832CB300350599 /* ImagyTests1.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F456D34B2D84306D00350599 /* ImagyTests2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F456D3542D84306D00350599 /* Build configuration list for PBXNativeTarget "ImagyTests2" */;
+			buildPhases = (
+				F456D3482D84306D00350599 /* Sources */,
+				F456D3492D84306D00350599 /* Frameworks */,
+				F456D34A2D84306D00350599 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F456D3532D84306D00350599 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F456D34D2D84306D00350599 /* ImagyTests2 */,
+			);
+			name = ImagyTests2;
+			packageProductDependencies = (
+			);
+			productName = ImagyTests2;
+			productReference = F456D34C2D84306D00350599 /* ImagyTests2.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -424,6 +465,10 @@
 						TestTargetID = B296D2342D19AD3E00880E1D;
 					};
 					F456D33E2D832CB300350599 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = B296D2342D19AD3E00880E1D;
+					};
+					F456D34B2D84306D00350599 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = B296D2342D19AD3E00880E1D;
 					};
@@ -451,6 +496,7 @@
 				B296D24A2D19AD4000880E1D /* ImagyTests */,
 				B296D2542D19AD4000880E1D /* ImagyUITests */,
 				F456D33E2D832CB300350599 /* ImagyTests1 */,
+				F456D34B2D84306D00350599 /* ImagyTests2 */,
 			);
 		};
 /* End PBXProject section */
@@ -481,6 +527,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F456D33D2D832CB300350599 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F456D34A2D84306D00350599 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -552,6 +605,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F456D3482D84306D00350599 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -569,6 +629,11 @@
 			isa = PBXTargetDependency;
 			target = B296D2342D19AD3E00880E1D /* Imagy */;
 			targetProxy = F456D3432D832CB300350599 /* PBXContainerItemProxy */;
+		};
+		F456D3532D84306D00350599 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B296D2342D19AD3E00880E1D /* Imagy */;
+			targetProxy = F456D3522D84306D00350599 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -871,6 +936,40 @@
 			};
 			name = Release;
 		};
+		F456D3552D84306D00350599 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bolshakoff.dima.ImagyTests2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Imagy;
+			};
+			name = Debug;
+		};
+		F456D3562D84306D00350599 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bolshakoff.dima.ImagyTests2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Imagy;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -915,6 +1014,15 @@
 			buildConfigurations = (
 				F456D3462D832CB300350599 /* Debug */,
 				F456D3472D832CB300350599 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F456D3542D84306D00350599 /* Build configuration list for PBXNativeTarget "ImagyTests2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F456D3552D84306D00350599 /* Debug */,
+				F456D3562D84306D00350599 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
