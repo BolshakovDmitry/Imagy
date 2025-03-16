@@ -2,12 +2,13 @@ import UIKit
 import Kingfisher
 
 protocol ImagesListCellDelegate: AnyObject {
-    func imageListCellDidTapLike(_ cell: ImagesListCell)
+    func imageListCellDidTapLike(_ cell: UITableViewCell?)
 }
 
 final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
+    private let imagesListService = ImagesListService.shared
     private var animationLayers = Set<CALayer>()
     weak var delegate: ImagesListCellDelegate?
     
@@ -44,9 +45,35 @@ final class ImagesListCell: UITableViewCell {
     
 
     @IBAction private func likeButtonClicked() {
-        delegate?.imageListCellDidTapLike(self)
+        delegate?.imageListCellDidTapLike(self as UITableViewCell)
     }
-
+   
+    func configure(with photo: Photo, dateFormatter: DateFormatter) {
+        // Настройка изображения
+        if let photoURL = URL(string: photo.thumbImageURL) {
+            let placeholder = UIImage(named: "placeholder")
+            cellImage.kf.indicatorType = .activity
+            cellImage.kf.setImage(with: photoURL, placeholder: placeholder) { result in
+                switch result {
+                case .success:
+                    self.cellImage.kf.indicatorType = .none
+                case .failure(let error):
+                    print("Failed to load image: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        // Настройка даты
+        if let date = photo.createdAt {
+            dateLabel.text = dateFormatter.string(from: date)
+        } else {
+            dateLabel.text = ""
+        }
+        
+        // Настройка кнопки лайка
+        let likeImage = photo.isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
+        likeButton.setImage(likeImage, for: .normal)
+    }
     
     // MARK: - установка сердечка
 

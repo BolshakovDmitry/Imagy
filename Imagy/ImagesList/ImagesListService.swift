@@ -46,8 +46,15 @@ final class ImagesListService {
                         )
                     }
                     
+                    // Фильтруем новые фото, оставляя только уникальные по id
+                    let uniqueNewPhotos = newPhotos.filter { newPhoto in
+                        !self.photos.contains { existingPhoto in
+                            existingPhoto.id == newPhoto.id
+                        }
+                    }
+                    
                     // Обновляем данные
-                    self.photos.append(contentsOf: newPhotos)
+                    self.photos.append(contentsOf: uniqueNewPhotos)
                     self.lastLoadedPage = nextPage
                     
                     // Отправляем уведомление
