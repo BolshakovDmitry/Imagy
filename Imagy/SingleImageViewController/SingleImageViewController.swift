@@ -26,6 +26,13 @@ final class SingleImageViewController: UIViewController {
         rescaleAndCenterImageInScrollView(image: image)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+         super.viewWillAppear(animated)
+         // Включаем анимацию при появлении экрана
+         UIView.setAnimationsEnabled(true)
+     }
+
+
     func showLoadingSpinner() {
        DispatchQueue.main.async {
            UIBlockingProgressHUD.show()
