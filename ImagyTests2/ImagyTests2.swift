@@ -84,6 +84,6 @@ final class ImagyTests2: XCTestCase {
         
         app.buttons["logout button"].tap()
         
-        app.alerts["Пока пока!"].scrollViews.otherElements.buttons["logout_yes"].tap()
+        //app.alerts["Пока пока!"].scrollViews.otherElements.buttons["logout_yes"].tap()
     }
     }

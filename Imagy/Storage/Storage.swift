@@ -1,7 +1,13 @@
 import Foundation
 import SwiftKeychainWrapper
 
-final class Storage {
+
+public protocol StorageProtocol: AnyObject {
+    var token: String? { get set }
+    func clear()
+}
+
+final class Storage: StorageProtocol {
     
     static let shared = Storage()
     private init(){}

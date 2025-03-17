@@ -8,6 +8,11 @@ final class TabBarController: UITabBarController {
         UIView.setAnimationsEnabled(false)
         
         let imagesListViewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController")
+        imagesListViewController.tabBarItem = UITabBarItem(
+            title: "",
+            image: UIImage(named: "tab_editorial_active"),
+            selectedImage: nil
+        )
         let profileViewController = ProfileViewController()
         let profileViewPresenter = ProfileViewPresenter()
         profileViewPresenter.controller = profileViewController
