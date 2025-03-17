@@ -1,6 +1,11 @@
 import Foundation
 
-final class ImagesListService {
+protocol ImagesListServiceProtocol: AnyObject {
+    func changeLike(photoID: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void)
+    var photos: [Photo] { get set }
+}
+
+class ImagesListService: ImagesListServiceProtocol {
     static let shared = ImagesListService()
     private init(){}
     
@@ -111,7 +116,7 @@ extension ImagesListService {
         case searchPhotoError
     }
     
-    func changeLike(photoID: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeLike(photoID: String, isLike: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
         assert(Thread.isMainThread, "This code must be executed on the main thread")
         
         guard let token = storage.token else {

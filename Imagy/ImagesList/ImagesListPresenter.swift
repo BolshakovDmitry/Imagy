@@ -11,7 +11,9 @@ public protocol ImagesListViewPresenterProtocol: AnyObject {
 
 final class ImagesListPresenter: ImagesListViewPresenterProtocol {
     weak var controller: ImagesListViewControllerProtocol?
-    private let imagesListService = ImagesListService.shared
+    var imagesListService = ImagesListService.shared
+    var imagesListServiceMock: ImagesListServiceProtocol?
+    var imagesListServiceForTests: ImagesListServiceProtocol?
     var photos: [Photo] = []
     
     func didGetPhotos() {

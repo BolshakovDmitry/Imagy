@@ -2,19 +2,22 @@ import UIKit
 import Kingfisher
 
 public protocol ImagesListViewControllerProtocol: AnyObject {
-    var presenter: ImagesListViewPresenterProtocol? { get set }
+    var presenter: ImagesListViewPresenterProtocol { get set }
     func updateTableViewAnimated(indexes: Range<Int>, photos: [Photo])
+    func configure(presenter: ImagesListViewPresenterProtocol)
+    func subscribeToPhotosUpdateTESTS()
+    func imageListCellDidTapLike(_ cell: UITableViewCell?)
 }
 
 final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol {
-    var presenter: ImagesListViewPresenterProtocol?
+    var presenter: ImagesListViewPresenterProtocol = ImagesListPresenter()
     @IBOutlet private var tableView: UITableView!
     private let currentDate = Date()
     private let imagesListService = ImagesListService.shared
     private let storage = Storage.shared
     var photos: [Photo] = []
     private var imageListServiceObserver: NSObjectProtocol?
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
+    private let token = Storage.shared.token
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,9 +31,12 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         subscribeToPhotosUpdate()
-        let presenter = ImagesListPresenter()
+        self.presenter.controller = self
+    }
+    
+    func configure(presenter: ImagesListViewPresenterProtocol){
         self.presenter = presenter
-        self.presenter?.controller = self
+        self.presenter.controller = self
     }
     
     // MARK: - переход на страницу с увеличенным изображением
@@ -48,7 +54,7 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
             // Получаем фото из массива photos
             let photo = photos[indexPath.row]
             // Загружаем изображение
-            presenter?.loadImageForSingleImageVC(for: photo, at: indexPath, in: viewController) { result in
+            presenter.loadImageForSingleImageVC(for: photo, at: indexPath, in: viewController) { result in
                 switch result {
                 case .success(let image):
                     viewController.image = image
@@ -71,7 +77,7 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
             addYesNoButtons: true
         ) { [weak self] in
             // Повторная попытка загрузить изображение
-            self?.presenter?.loadImageForSingleImageVC(for: photo, at: indexPath, in: viewController) { result in
+            self?.presenter.loadImageForSingleImageVC(for: photo, at: indexPath, in: viewController) { result in
                 switch result {
                 case .success(let image):
                     viewController.image = image
@@ -88,15 +94,21 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
     
     // MARK: - подписка на обновление массива с фотками
     
-    private func subscribeToPhotosUpdate() {
+     func subscribeToPhotosUpdate() {
         imageListServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ImagesListService.ImagesListServiceDidChange,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.presenter?.didGetPhotos()
+                self?.presenter.didGetPhotos()
             }
+    }
+    
+    func subscribeToPhotosUpdateTESTS(){
+        self.presenter.didGetPhotos()
+        guard let token = token else { return }
+        ImagesListService.shared.fetchPhotosNextPage(token: token)
     }
     
     func updateTableViewAnimated(indexes: Range<Int>, photos: [Photo]) {
@@ -175,7 +187,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
         guard let imagesListCell = cell as? ImagesListCell,
               let indexPath = tableView.indexPath(for: imagesListCell)
         else { return }
-        presenter?.changeLikeOnPhoto(for: cell, with: indexPath){ [weak self] result in
+        presenter.changeLikeOnPhoto(for: cell, with: indexPath){ [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
@@ -185,4 +197,6 @@ extension ImagesListViewController: ImagesListCellDelegate {
             }
         }
     }
+    
+    
 }
