@@ -104,7 +104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1044.9275362318842" y="-276.5625"/>
+            <point key="canvasLocation" x="135" y="-277"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="3ab-kn-xWn">
@@ -112,7 +112,7 @@
                 <viewController storyboardIdentifier="SplashViewController" modalPresentationStyle="fullScreen" id="4fP-uN-LC7" customClass="SplashViewController" customModule="Imagy" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iMc-cv-0qa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1936" y="-401"/>
+            <point key="canvasLocation" x="-1497" y="-531"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="NEu-no-DKT">
@@ -131,7 +131,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyG-Dd-Gbo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-731.8840579710145" y="91.741071428571431"/>
+            <point key="canvasLocation" x="-733" y="-277"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="M7K-dB-Sig">
@@ -199,7 +199,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ut2-yL-INW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1892.753623188406" y="-277.23214285714283"/>
+            <point key="canvasLocation" x="1045" y="-277"/>
         </scene>
         <!--Auth View Controller-->
         <scene sceneID="5pc-Uu-9ho">

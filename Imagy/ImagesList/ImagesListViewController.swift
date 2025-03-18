@@ -173,9 +173,17 @@ extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         print("WILL display ----- indexPath - ", indexPath.row+1, imagesListService.photos.count  )
+        
+        var UITestModeActive = ProcessInfo.processInfo.arguments.contains(
+            "UITestMode")
+        UIBlockingProgressHUD.dismiss()
+        if UITestModeActive { return }
+        
         if indexPath.row + 1 == imagesListService.photos.count{
             imagesListService.fetchPhotosNextPage(token: storage.token ?? "")
         }
+        
+        
     }
 }
 

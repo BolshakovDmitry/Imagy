@@ -14,6 +14,7 @@ final class WebViewController: UIViewController & WebViewControllerProtocol {
     var presenter: WebViewPresenterProtocol?
     weak var delegate: WebViewControllerDelegate?
     @IBOutlet weak var webView: WKWebView!
+    
     @IBOutlet private var progressView: UIProgressView!
     private var estimatedProgressObservation: NSKeyValueObservation?
     
@@ -22,7 +23,6 @@ final class WebViewController: UIViewController & WebViewControllerProtocol {
         webView.navigationDelegate = self
         presenter?.viewDidLoad()
         webView.accessibilityIdentifier = "UnsplashWebView"
-        
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
              options: [],
