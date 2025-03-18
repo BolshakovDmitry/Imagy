@@ -1,9 +1,16 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func didReceiveProfileImageURL(with url: URL, processor: ImageProcessor)
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     
     private var animationLayers = Set<CALayer>() // Множество для хранения слоев с анимациями
+    
+    // MARK: -   настройка элементов
     
     private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
@@ -21,6 +28,7 @@ final class ProfileViewController: UIViewController {
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "nameLabel"
         return label
     }()
     
@@ -30,6 +38,7 @@ final class ProfileViewController: UIViewController {
         label.textColor = UIColor(named: "YP Grey")
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "usernameLabel"
         return label
     }()
     
@@ -42,23 +51,26 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private lazy var shareButton: UIButton = {
+    private lazy var logoutButton: UIButton = {
         let button = UIButton.systemButton(with: UIImage(systemName: "ipad.and.arrow.forward")!, target: self, action: nil)
         button.tintColor = UIColor(named: "YP Red")
         button.addTarget(self, action: #selector(logout), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityIdentifier = "logout button"
         return button
     }()
     
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    var presenter: ProfileViewPresenterProtocol?
+    
+    // MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(named: "YP Background")
-        
         setupViews()
         setupConstraints()
         
@@ -71,7 +83,7 @@ final class ProfileViewController: UIViewController {
                 using: { [weak self] _ in
                     guard let self else { return }
                     self.removeGradientLayers() // Удаляем градиентные слои
-                    self.updateAvatar()
+                    presenter?.updateAvatar()
                 })
         
         // Добавляем градиентные слои
@@ -80,7 +92,7 @@ final class ProfileViewController: UIViewController {
         addGradientLayer(to: usernameLabel)
         addGradientLayer(to: greetingLabel)
         
-        updateAvatar()
+        presenter?.updateAvatar()
         
         if let profile = profileService.profile {
             updateProfileDetails(profile: profile)
@@ -91,6 +103,52 @@ final class ProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
         updateGradientLayersFrame() // Обновляем размеры градиентных слоев
     }
+    
+    
+    @objc private func logout() {
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            presenter?.logout()
+            self.switchToSplashViewController()
+        }
+        yesAction.accessibilityIdentifier = AccessibilityConstans.yesActionAccessibilityIdentifier
+        
+        let noAction = UIAlertAction(title: "Нет", style: .cancel) { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func switchToSplashViewController() {
+        let splashViewController = SplashViewController()
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = splashViewController
+    }
+    
+    func didReceiveProfileImageURL(with url: URL, processor: ImageProcessor) {
+        
+        DispatchQueue.main.async {
+            self.avatarImageView.kf.setImage(
+                with: url,
+                options: [.processor(processor)]
+            )
+            self.removeGradientLayers() // Удаляем градиентные слои после загрузки изображения
+        }
+        
+    }
+    
+    
+    private func updateProfileDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        usernameLabel.text = profile.loginName
+        greetingLabel.text = profile.bio
+    }
+    // MARK: - градиенты
     
     private func addGradientLayer(to view: UIView, cornerRadius: CGFloat? = nil) {
         let gradient = CAGradientLayer()
@@ -138,70 +196,14 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    @objc private func logout() {
-        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            ProfileLogoutService.shared.logout()
-            self.switchToSplashViewController()
-        }
-        yesAction.accessibilityIdentifier = AccessibilityConstans.yesActionAccessibilityIdentifier
-        
-        let noAction = UIAlertAction(title: "Нет", style: .cancel) { [weak self] _ in
-            self?.dismiss(animated: true, completion: nil)
-        }
-        
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    private func switchToSplashViewController() {
-        let splashViewController = SplashViewController()
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        window.rootViewController = splashViewController
-    }
-    
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarUrl
-        else { return }
-        
-        if let url = URL(string: profileImageURL) {
-            KingfisherManager.shared.retrieveImage(with: url) { result in
-                switch result {
-                case .success(let imageResult):
-                    let imageSize = imageResult.image.size
-                    let cornerRadius = imageSize.width * 0.5 // 50% от ширины изображения
-                    
-                    let processor = RoundCornerImageProcessor(cornerRadius: cornerRadius)
-                    DispatchQueue.main.async {
-                        self.avatarImageView.kf.setImage(
-                            with: url,
-                            options: [.processor(processor)]
-                        )
-                        self.removeGradientLayers() // Удаляем градиентные слои после загрузки изображения
-                    }
-                case .failure(let error):
-                    print("Ошибка загрузки изображения: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    private func updateProfileDetails(profile: Profile) {
-        nameLabel.text = profile.name
-        usernameLabel.text = profile.loginName
-        greetingLabel.text = profile.bio
-    }
+    // MARK: - настройка вью и констрейнты
     
     private func setupViews() {
         view.addSubview(avatarImageView)
         view.addSubview(nameLabel)
         view.addSubview(usernameLabel)
         view.addSubview(greetingLabel)
-        view.addSubview(shareButton)
+        view.addSubview(logoutButton)
     }
     
     private func setupConstraints() {
@@ -220,8 +222,8 @@ final class ProfileViewController: UIViewController {
             greetingLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 8),
             greetingLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            shareButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            shareButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 0)
+            logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            logoutButton.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 0)
         ])
     }
 }
