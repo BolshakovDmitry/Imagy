@@ -48,7 +48,7 @@ final class ImagyTests2: XCTestCase {
         
         loginTextField.tap()
         Thread.sleep(forTimeInterval: 0.5)
-        loginTextField.typeText("bolshakoff.dima@yandex.ru")
+        loginTextField.typeText("ВАШ НИК")
         
         webView.swipeUp()
         
@@ -62,7 +62,7 @@ final class ImagyTests2: XCTestCase {
         passwordTextField.tap()
         Thread.sleep(forTimeInterval: 0.5)
 
-        passwordTextField.typeText("2011501099")
+        passwordTextField.typeText("ВАШ ПАРОЛЬ")
         webView.swipeUp()
         
         // Нажимаем кнопку "Login"
