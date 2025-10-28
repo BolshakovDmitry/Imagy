@@ -1,4 +1,4 @@
-ImageFeed
+Imagy
 
 Purpose and Objectives
 
@@ -8,6 +8,7 @@ Application Objectives
 
 Infinite Image Feed: Display an endless feed of photos from Unsplash Editorial.
 User Profiles: Provide basic profile information of users.
+
 Application Overview
 
 This app integrates Unsplash's OAuth authorization and offers a feature-rich browsing experience. Users can scroll through images, add and remove favorites, and interact with photos in various ways.
