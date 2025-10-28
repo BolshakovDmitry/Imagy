@@ -1,33 +1,28 @@
 Imagy
 
-Purpose and Objectives
+Цель и Задачи
+Это многостраничное приложение позволяет пользователям просматривать изображения из Unsplash API, предлагая как галерею отобранных изображений, так и информацию о профилях отдельных пользователей.
 
-This multi-page application allows users to explore images from the Unsplash API, offering both a gallery of curated images and insights into individual user profiles.
+Цели Приложения
+Бесконечная лента изображений: Отображение бесконечной ленты фотографий из Unsplash Editorial.
+Профили пользователей: Предоставление базовой информации о профилях пользователей.
 
-Application Objectives
+Обзор Приложения
+Это приложение интегрируется с OAuth авторизацией Unsplash и предлагает многофункциональный опыт просмотра. Пользователи могут прокручивать изображения, добавлять и удалять избранное, а также взаимодействовать с фотографиями различными способами.
 
-Infinite Image Feed: Display an endless feed of photos from Unsplash Editorial.
-User Profiles: Provide basic profile information of users.
+Ключевые Функции
+Авторизация: Приложение требует входа пользователя через OAuth от Unsplash.
+Главный экран: Прокручиваемая лента изображений Unsplash, которую пользователи могут просматривать, добавлять в избранное или удалять из избранного.
+Просмотр изображения: Каждое изображение можно просмотреть детально, и пользователи могут поделиться ссылкой на изображение вне приложения.
+Профиль пользователя: Раздел профиля показывает избранные изображения пользователя и базовую информацию профиля.
+Используемые Технологии
 
-Application Overview
+UIKit для пользовательского интерфейса
+Unsplash API для данных изображений
+OAuth для аутентификации пользователей
 
-This app integrates Unsplash's OAuth authorization and offers a feature-rich browsing experience. Users can scroll through images, add and remove favorites, and interact with photos in various ways.
+Установка и Настройка
 
-Key Features
-
-Authorization: The application requires user login via OAuth through Unsplash.
-Home Screen: A scrollable feed of Unsplash images, which users can browse, add to favorites, or remove from favorites.
-Image View: Each image can be viewed in detail, and users can share a link to the image outside the app.
-User Profile: A profile section shows the user’s favorite images and basic profile information.
-  
-Technologies Used
-
-UIKit for user interface.
-Unsplash API for image data.
-OAuth for user authentication.
-Installation and Setup
-
-Clone this repository.
-Obtain an Unsplash API key by registering your application on the Unsplash developer portal.
-Update the API key in the project settings.
-Run the application on a compatible iOS device or simulator.
+Клонируйте этот репозиторий
+Запустите приложение на совместимом iOS-устройстве или симуляторе
+Важно - для работы приложения необходим включенный VPN! 
